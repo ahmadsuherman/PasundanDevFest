@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('payment_code')->unique();
             $table->string('amount');
             $table->date('payment_date');
-            $table->enum(['Pending', 'Confirmed', 'Cancelled']);
+            $table->enum('payment_status', ['Pending', 'Confirmed', 'Cancelled']);
             $table->string('payment_method');
             $table->timestamps();
         });

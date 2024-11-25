@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum(['Admin', 'Speakers', 'Members']);
+            $table->enum('roles', ['Admin', 'Speakers', 'Members']);
             $table->boolean('is_verified');
             $table->text('avatar')->nullable();
             $table->text('bio')->nullable();
