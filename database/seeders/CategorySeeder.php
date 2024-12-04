@@ -14,39 +14,39 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'slug'          => 'Machine Learning',
-            'name'          => 'machine-learning',
+            'name'          => 'Machine Learning',
+            'slug'          => 'machine-learning',
         ]);
 
         Category::create([
-            'slug'          => 'Web Development',
-            'name'          => 'web-development',
+            'name'          => 'Web Development',
+            'slug'          => 'web-development',
         ]);
-        
+
         Category::create([
-            'slug'          => 'Network and Cyber Security',
-            'name'          => 'network-and-cyber-security',
+            'name'          => 'Network and Cyber Security',
+            'slug'          => 'network-and-cyber-security',
         ]);
-        
+
         Category::create([
-            'slug'          => 'Mobile Development',
-            'name'          => 'mobile-development',
+            'name'          => 'Mobile Development',
+            'slug'          => 'mobile-development',
         ]);
-        
+
         Category::create([
-            'slug'          => 'UI/UX',
-            'name'          => 'ui-ux',
+            'name'          => 'UI/UX',
+            'slug'          => 'ui-ux',
         ]);
-        
+
         Category::create([
-            'slug'          => 'Cloud',
-            'name'          => 'cloud',
+            'name'          => 'Cloud',
+            'slug'          => 'cloud',
         ]);
-        
+
         Category::create([
-            'slug'          => 'IoT',
-            'name'          => 'iot',
+            'name'          => 'IoT',
+            'slug'          => 'iot',
         ]);
-        
+
     }
 }
