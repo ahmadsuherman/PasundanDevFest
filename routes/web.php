@@ -7,6 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('logout', function(){
+    return redirect('/');
+});
+
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function(){
         return view('back-page.dashboard', ['title' => 'Dashboard']);
