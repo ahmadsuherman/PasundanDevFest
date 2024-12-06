@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\BackPage;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -13,8 +14,9 @@ class CategoryController extends Controller
     public function index()
     {
         $title = 'Kategori';
+        $categories = Category::get();
 
-        $data = compact('title');
+        $data = compact('title', 'categories');
         return view('back-page.categories.index', $data);
     }
 
