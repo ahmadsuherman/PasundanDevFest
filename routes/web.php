@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\http\Controllers\BackPage\AccountController;
 use App\http\Controllers\BackPage\CategoryController;
 use App\http\Controllers\BackPage\MemberController;
+use App\http\Controllers\BackPage\SpeakerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,4 +37,9 @@ Route::prefix('admin')->group(function () {
     Route::patch('members/{username}/edit', [MemberController::class, 'update'])->name('members.update');
     Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
 
+    Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');
+    Route::get('speakers/create', [SpeakerController::class, 'create'])->name('speakers.create');
+    Route::get('speakers/{username}/edit', [SpeakerController::class, 'edit'])->name('speakers.edit');
+    Route::patch('speakers/{username}/edit', [SpeakerController::class, 'update'])->name('speakers.update');
+    Route::get('speakers/{username}', [SpeakerController::class, 'show'])->name('speakers.show');
 });
