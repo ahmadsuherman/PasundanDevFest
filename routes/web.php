@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontPage\HomeController;
-
 use App\http\Controllers\BackPage\AccountController;
 use App\http\Controllers\BackPage\CategoryController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::post('logout', function(){
     return redirect('/');
 });
-
-Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function(){
