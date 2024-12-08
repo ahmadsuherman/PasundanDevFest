@@ -1,12 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\http\Controllers\BackPage\AccountController;
 use App\http\Controllers\BackPage\CategoryController;
+use App\http\Controllers\BackPage\MemberController;
+use App\http\Controllers\BackPage\SpeakerController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\FrontPage\HomeController;
+use App\Http\Controllers\FrontPage\AboutController;
+use App\Http\Controllers\FrontPage\EventsController;
+use App\Http\Controllers\FrontPage\RegisterEventController;
+use App\Http\Controllers\FrontPage\MembersController;
+use App\Http\Controllers\FrontPage\LoginController;
+use App\Http\Controllers\FrontPage\RegisterController;
+
+
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/events', [EventsController::class, 'showEvents']);
+Route::get('/events/{slug}', [EventsController::class, 'showDetailEvents']);
+Route::get('/registerevent}', [EventsController::class, 'showRegisterEvent']);
+Route::get('/members', [MembersController::class, 'showMembers']);
+Route::get('/login', [LoginController::class, 'showLogin']);
+Route::get('/register', [RegisterController::class, 'showRegister']);
 
 Route::post('logout', function(){
     return redirect('/');
@@ -28,4 +45,15 @@ Route::prefix('admin')->group(function () {
     Route::patch('categories/{slug}/edit', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('categories/{slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+    Route::get('members', [MemberController::class, 'index'])->name('members.index');
+    Route::get('members/create', [MemberController::class, 'create'])->name('members.create');
+    Route::get('members/{username}/edit', [MemberController::class, 'edit'])->name('members.edit');
+    Route::patch('members/{username}/edit', [MemberController::class, 'update'])->name('members.update');
+    Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
+
+    Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');
+    Route::get('speakers/create', [SpeakerController::class, 'create'])->name('speakers.create');
+    Route::get('speakers/{username}/edit', [SpeakerController::class, 'edit'])->name('speakers.edit');
+    Route::patch('speakers/{username}/edit', [SpeakerController::class, 'update'])->name('speakers.update');
+    Route::get('speakers/{username}', [SpeakerController::class, 'show'])->name('speakers.show');
 });
