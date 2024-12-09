@@ -75,6 +75,7 @@
         </button>
     </form>
 
+
     @push('scripts')
         @include('components.parsley')
     @endpush
