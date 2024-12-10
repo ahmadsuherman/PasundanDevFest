@@ -12,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $title = 'Kategori';
+        $title = 'Categories';
 
         $data = compact('title');
         return view('back-page.categories.index', $data);
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $title = 'Kategori';
+        $title = 'Categories';
 
         $data = compact('title');
         return view('back-page.categories.create', $data);
@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
+        return redirect()->route('categories.index')->with('success', 'Categori berhasil ditambahkan.');
     }
 
     /**
@@ -50,7 +50,7 @@ class CategoryController extends Controller
      */
     public function edit(string $slug)
     {
-        $title = 'Kategori';
+        $title = 'Categories';
 
         $data = compact('title');
         return view('back-page.categories.edit', $data);

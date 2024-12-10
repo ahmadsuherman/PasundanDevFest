@@ -17,7 +17,7 @@ class MemberController extends Controller
 
     public function create()
     {
-        $title = 'Member';
+        $title = 'Members';
 
         $data = compact('title');
         return view('back-page.members.create', $data);
@@ -25,7 +25,7 @@ class MemberController extends Controller
 
     public function edit()
     {
-        $title = 'Member';
+        $title = 'Members';
 
         $data = compact('title');
         return view('back-page.members.edit', $data);
@@ -33,7 +33,7 @@ class MemberController extends Controller
 
     public function show($username)
     {
-        $title = 'Member';
+        $title = 'Members';
 
         $data = compact('title');
         return view('back-page.members.show', $data);

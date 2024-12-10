@@ -33,7 +33,7 @@ class SpeakerController extends Controller
 
     public function show($username)
     {
-        $title = 'Speaker';
+        $title = 'Speakers';
 
         $data = compact('title');
         return view('back-page.speakers.show', $data);
