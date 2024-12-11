@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackPage;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +15,9 @@ class CategoryController extends Controller
     {
         $title = 'Categories';
 
-        $data = compact('title');
+        $category = Category::all();
+
+        $data = compact('title', 'category');
         return view('back-page.categories.index', $data);
     }
 
@@ -34,6 +37,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // $validated = $request->validate([
+        //     'name' => 'string|required',
+        //     'slug' => 'string'
+        // ]);
+
+        $category = Category::create([
+            'name' => $request->name,
+            'slug' => $request->slug
+        ]);
+
+        $category->save();
+
         return redirect()->route('categories.index')->with('success', 'Categori berhasil ditambahkan.');
     }
 
