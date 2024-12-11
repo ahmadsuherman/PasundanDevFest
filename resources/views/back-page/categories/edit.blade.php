@@ -1,7 +1,7 @@
 <x-backPage.layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <form data-form="validate" action="/admin/categories/web-development/edit" method="post" class="bg-white p-6">
+    <form data-form="validate" action="/admin/categories/{{ $category->slug }}/edit" method="post" class="bg-white p-6">
         @csrf
         @method('PATCH')
         <h3 class="text-lg font-medium leading-none text-gray-900 dark:text-white">Edit {{ $title }}</h3>
@@ -9,11 +9,11 @@
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                <input type="text" name="name" id="name" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" data-parsley-required-message="Nama harus diisi" placeholder="Masukkan nama" required="" data-parsley-trigger="keyup" value="Web Development" required="">
+                <input type="text" name="name" value="{{ $category->name }}" id="name" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" data-parsley-required-message="Nama harus diisi" placeholder="Masukkan nama" required="" data-parsley-trigger="keyup" value="Web Development" required="">
             </div>
             <div>
                 <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-            <input readonly type="text" name="slug" id="slug" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" value="web-development">
+            <input readonly type="text" name="slug" value='{{ $category->slug }}' id="slug" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" value="web-development">
             </div>
             
         </div>

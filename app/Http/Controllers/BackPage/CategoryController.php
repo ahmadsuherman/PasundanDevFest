@@ -37,14 +37,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'name' => 'string|required',
-        //     'slug' => 'string'
-        // ]);
+        $validated = $request->validate([
+            'name' => 'string|required',
+            'slug' => 'string'
+        ]);
 
         $category = Category::create([
-            'name' => $request->name,
-            'slug' => $request->slug
+            'name' => $validated['name'],
+            'slug' => $validated['slug']
         ]);
 
         $category->save();
@@ -76,6 +76,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $slug)
     {
+
+
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
@@ -84,6 +86,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $slug)
     {
+        $data = Category::where('slug', $slug);
+        $data->delete();
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }
