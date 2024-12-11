@@ -66,8 +66,8 @@ class CategoryController extends Controller
     public function edit(string $slug)
     {
         $title = 'Categories';
-
-        $data = compact('title');
+        $category = Category::where('slug', $slug)->first();
+        $data = compact('title', 'category');
         return view('back-page.categories.edit', $data);
     }
 
@@ -76,8 +76,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-
-
+        $validated = $request->validate([
+            'name' => 'string|required',
+            'slug' => 'string'
+        ]);
+        $data = Category::where('slug', $slug)->first();
+        $data->name = $validated['name'];
+        $data->slug = $validated['slug'];
+        $data->save();
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
