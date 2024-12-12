@@ -7,23 +7,23 @@
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input type="text" name="username" id="username" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Username harus diisi" placeholder="Masukkan username" required="" data-parsley-trigger="keyup" value="user_">
+                <input type="text" name="username" id="username" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Username harus diisi" placeholder="Masukkan username" required="" data-parsley-trigger="keyup" value="{{ old('username', $user->username) }}">
             </div>
             
             <div>
                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap</label>
-                <input type="text" name="fullname" id="fullname" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Nama lengkap harus diisi" placeholder="Masukkan nama lengkap" required="" data-parsley-trigger="keyup" value="Fullname">
+                <input type="text" name="fullname" id="fullname" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Nama lengkap harus diisi" placeholder="Masukkan nama lengkap" required="" data-parsley-trigger="keyup" value="{{ old('fullname', $user->fullname) }}">
             </div>
             
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" name="email" id="email" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Email harus diisi" placeholder="Masukkan email" required="" data-parsley-trigger="keyup" value="user@gmail.com">
+                <input type="email" name="email" id="email" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Email harus diisi" placeholder="Masukkan email" required="" data-parsley-trigger="keyup" value="{{ old('email', $user->email) }}">
             </div>
             
             
             <div>
                 <label for="roles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                <input type="text" name="roles" id="roles" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Peran harus diisi" placeholder="Masukkan peran" required="" data-parsley-trigger="keyup" value="Member">
+                <input type="text" name="roles" id="roles" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Peran harus diisi" placeholder="Masukkan peran" required="" data-parsley-trigger="keyup" value="{{ old('roles', $user->roles) }}">
             </div>
         
         </div>
@@ -31,7 +31,7 @@
         <div class="grid gap-4 mb-4 sm:grid-cols-1">
         <div>
             <label for="bio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
-            <textarea rows="5" name="bio" id="bio" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
+            <textarea rows="5" name="bio" id="bio" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="">{{ old('bio', $user->bio) }}</textarea>
         </div>
 
         <div>
@@ -40,12 +40,14 @@
                 <div class="flex items-center gap-2 link-group">
                     <input
                         type="url"
-                        placeholder=""
+                         value="{{ old('links[]', $link->url) }}"
+                        placeholder="Link"
                         class="flex-1 px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 outline-none rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     <input
                         type="text"
-                        placeholder=""
+                        value="{{ old('links[]', $link->label) }}"
+                        placeholder="Label"
                         class="w-36 px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300 outline-none rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     <button class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 remove-link">
