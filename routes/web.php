@@ -47,14 +47,15 @@ Route::prefix('admin')->group(function () {
     Route::delete('categories/{slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('members', [MemberController::class, 'index'])->name('members.index');
-    Route::get('/admin/members/create', [MemberController::class, 'create'])->name('admin.members.create');
-    Route::post('/admin/members', [MemberController::class, 'store'])->name('admin.members.store');
+    Route::get('members/create', [MemberController::class, 'create'])->name('admin.members.create');
+    Route::post('admin/members', [MemberController::class, 'store'])->name('admin.members.store');
     Route::get('members/{username}/edit', [MemberController::class, 'edit'])->name('members.edit');
     Route::patch('members/{username}/edit', [MemberController::class, 'update'])->name('members.update');
     Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
 
     Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');
     Route::get('speakers/create', [SpeakerController::class, 'create'])->name('speakers.create');
+    Route::post('speakers/create', [SpeakerController::class, 'store'])->name('speakers.store');
     Route::get('speakers/{username}/edit', [SpeakerController::class, 'edit'])->name('speakers.edit');
     Route::patch('speakers/{username}/edit', [SpeakerController::class, 'update'])->name('speakers.update');
     Route::get('speakers/{username}', [SpeakerController::class, 'show'])->name('speakers.show');
@@ -67,12 +68,3 @@ Route::prefix('admin')->group(function () {
     Route::get('events/{username}', [EventController::class, 'show'])->name('events.show');
 });
 
-
-// Route::get('/members', function(){
-//     $members = Member::latest();
-
-//     if(request('search')){
-//         $members->where('title', 'like', '%', request('search') . '%');
-        
-//     }
-// });

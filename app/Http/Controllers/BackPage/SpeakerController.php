@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\BackPage;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class SpeakerController extends Controller
 {
@@ -17,10 +19,32 @@ class SpeakerController extends Controller
 
     public function create()
     {
-        $title = 'Speakers';
+        $title = 'Create Speakers';
 
         $data = compact('title');
         return view('back-page.speakers.create', $data);
+    }
+
+    public function store(Request $request){
+        // dd($request->all());
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username',
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'roles' => 'required|in:Admin,User,Speaker',
+            'bio' => 'nullable|string|max:500',
+        ]);
+
+        User::create([
+            'username' => $request->username,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'roles' => $request->roles,
+            'bio' => $request->bio,
+            'password' => Hash::make('defaultpassword'),
+        ]);
+
+        return redirect()->back();
     }
 
     public function edit()

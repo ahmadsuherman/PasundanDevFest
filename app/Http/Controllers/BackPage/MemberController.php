@@ -26,7 +26,7 @@ class MemberController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $$request->validate([
             'username' => 'required|string|max:255',
             'fullname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -37,7 +37,7 @@ class MemberController extends Controller
 
         User::create($validated);
 
-        return redirect()->route('back-page.members.index')->with('success', 'Member berhasil ditambahkan.');
+        return redirect()->route('members.index')->with('success', 'Member berhasil ditambahkan.');
     }
 
     public function edit()

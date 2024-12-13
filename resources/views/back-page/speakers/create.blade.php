@@ -1,9 +1,8 @@
 <x-backPage.layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <form data-form="validate" action="{{ route('speakers.create') }}" method="post" class="bg-white p-6">
+    <form data-form="validate" action="{{ route('speakers.store') }}" method="post" class="bg-white p-6">
         @csrf
-        @method('PATCH')
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>

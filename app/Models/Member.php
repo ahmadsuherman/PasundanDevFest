@@ -9,5 +9,5 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['username', 'fullname', 'email', 'roles', 'bio', 'links'];
+    protected $fillable = ['username', 'fullname', 'email', 'roles', 'bio'];
 }
