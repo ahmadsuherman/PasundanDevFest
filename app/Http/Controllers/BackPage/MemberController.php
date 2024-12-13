@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\BackPage;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Members';
 
@@ -17,10 +18,26 @@ class MemberController extends Controller
 
     public function create()
     {
-        $title = 'Members';
+        $title = 'Create Members';
 
         $data = compact('title');
         return view('back-page.members.create', $data);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => 'required|string|max:255',
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'roles' => 'required|string',
+            'bio' => 'nullable|string',
+            'links' => 'nullable|string',
+         ]);
+
+        User::create($validated);
+
+        return redirect()->route('back-page.members.index')->with('success', 'Member berhasil ditambahkan.');
     }
 
     public function edit()
@@ -43,4 +60,6 @@ class MemberController extends Controller
     {
         return redirect()->route('members.index')->with('success', 'Member berhasil diperbarui.');
     }
+
+   
 }
