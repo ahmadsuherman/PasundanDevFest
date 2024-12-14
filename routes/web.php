@@ -53,6 +53,7 @@ Route::prefix('admin')->group(function () {
     Route::patch('members/{username}/edit', [MemberController::class, 'update'])->name('members.update');
     Route::delete('members/{id}', [SpeakerController::class, 'destroy'])->name('members.destroy');
     Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
+    Route::get('/admin/speakers/{id}/detail', [SpeakerController::class, 'detailMember'])->name('detailMember');
 
     Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');
     Route::get('speakers/create', [SpeakerController::class, 'create'])->name('speakers.create');
@@ -61,6 +62,7 @@ Route::prefix('admin')->group(function () {
     Route::patch('speakers/{username}/edit', [SpeakerController::class, 'update'])->name('speakers.update');
     Route::delete('speakers/{id}', [SpeakerController::class, 'destroy'])->name('speakers.destroy');
     Route::get('speakers/{username}', [SpeakerController::class, 'show'])->name('speakers.show');
+    Route::get('/admin/speakers/{id}/detail', [SpeakerController::class, 'detailSpeaker'])->name('detailSpeaker');
 
     Route::get('events', [EventController::class, 'index'])->name('events.index');
     Route::get('events/create', [EventController::class, 'create'])->name('events.create');

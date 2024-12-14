@@ -77,5 +77,11 @@ class MemberController extends Controller
         return redirect()->route('members.index')->with('success', 'Member berhasil diperbarui.');
     }
 
-   
+    public function detailMember($id)
+    {
+        $member = User::findOrFail($id); 
+        $title = 'Detail Member';
+
+        return view('back-page.members.detail', compact('title', 'member'));
+    }
 }

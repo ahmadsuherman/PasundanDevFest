@@ -4,8 +4,11 @@ namespace App\Http\Controllers\BackPage;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use function Laravel\Prompts\table;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Container\Attributes\DB;
 
 class SpeakerController extends Controller
 {
@@ -58,7 +61,7 @@ class SpeakerController extends Controller
     {
         $title = 'EditSpeakers';
 
-        $speakers = User::where('username', $username)->firstOrFail();
+        $speaker = User::where('username', $username)->firstOrFail();
 
         return view('back-page.speakers.edit', compact('title', 'speaker'));
     }
@@ -103,5 +106,13 @@ class SpeakerController extends Controller
         ]);
 
         return redirect()->route('speakers.index')->with('success', 'Speaker berhasil diperbarui.');
+    }
+
+    public function detailSpeaker($id)
+    {
+        $speakers = User::findOrFail($id); 
+        $title = 'Detail Speaker';
+
+        return view('back-page.speakers.detail', compact('title', 'speaker'));
     }
 }
