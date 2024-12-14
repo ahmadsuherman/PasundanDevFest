@@ -58,6 +58,7 @@ Route::prefix('admin')->group(function () {
     Route::post('speakers/create', [SpeakerController::class, 'store'])->name('speakers.store');
     Route::get('speakers/{username}/edit', [SpeakerController::class, 'edit'])->name('speakers.edit');
     Route::patch('speakers/{username}/edit', [SpeakerController::class, 'update'])->name('speakers.update');
+    Route::delete('speakers/{id}', [SpeakerController::class, 'destroy'])->name('speakers.destroy');
     Route::get('speakers/{username}', [SpeakerController::class, 'show'])->name('speakers.show');
 
     Route::get('events', [EventController::class, 'index'])->name('events.index');

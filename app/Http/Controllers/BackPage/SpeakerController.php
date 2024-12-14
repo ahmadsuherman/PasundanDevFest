@@ -61,6 +61,17 @@ class SpeakerController extends Controller
         return view('back-page.speakers.edit', $data);
     }
 
+    public function destroy($id)
+    {
+        $speakers = User::findOrFail($id);
+        try {$speakers->delete();
+        return redirect()->route('speakers.index')->with('success', 'Speaker berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('speakers.index')->with('error', 'Terjadi kesalahan saat menghapus speaker.');
+    }
+}
+
+
     public function show($username)
     {
         $title = 'Speakers';
