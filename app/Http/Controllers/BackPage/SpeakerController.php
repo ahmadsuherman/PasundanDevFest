@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class SpeakerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Speakers';
+
+        $speakers = User::when($request->search, function($query) use ($request) {
+            $query->where('username', 'like', '%' .$request->search. '%')
+                    ->orWhere('fullname', 'like', '%' .$request->search. '%')
+                  ->orWhere('email', 'like', '%' .$request->search. '%');
+            })->paginate(10)->appends(['search' => $request->search]);
 
         $data = compact('title');
         return view('back-page.speakers.index', $data);
@@ -49,7 +55,7 @@ class SpeakerController extends Controller
 
     public function edit()
     {
-        $title = 'Speakers';
+        $title = 'EditSpeakers';
 
         $data = compact('title');
         return view('back-page.speakers.edit', $data);
