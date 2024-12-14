@@ -52,6 +52,15 @@ class EventController extends Controller
 
     public function update(Request $request, string $slug)
     {
-        return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ])
+
+        $event = Event::where('slug', $slug)->firstOrFail();
+        
+        $event->update($request->validated());
+    
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 }
