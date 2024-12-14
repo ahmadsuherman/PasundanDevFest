@@ -30,17 +30,24 @@ class EventController extends Controller
     
 
     public function store(Request $request)
-    {
-        return redirect()->route('events.index')->with('success', 'Events berhasil ditambahkan.');
-    }
+{
+    $validatedData = $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'nullable',
+        'date' => 'required|date',
+        'location' => 'required|max:255'
+    ]);
 
-    public function edit(string $slug)
-    {
-        $title = 'Events';
-        $event = Events::where('slug', $slug)->first();
-        $data = compact('title');
-        return view('back-page.events.edit', $data);
-    }
+    $event = new Event();
+    $event->title = $validatedData['title'];
+    $event->description = $validatedData['description'] ?? null;
+    $event->date = $validatedData['date'];
+    $event->location = $validatedData['location'];
+
+    $event->save();
+
+    return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
+}
 
     public function show($slug)
     {
@@ -50,7 +57,7 @@ class EventController extends Controller
         return view('back-page.events.show', $data);
     }
 
-    public function update(Request $request, string $slug)
+public function update(Request $request, string $slug)
     {
         $request->validate([
             'title' => 'required|string|max:255',
