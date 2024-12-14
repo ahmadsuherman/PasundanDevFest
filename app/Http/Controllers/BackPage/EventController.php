@@ -37,7 +37,7 @@ class EventController extends Controller
     public function edit(string $slug)
     {
         $title = 'Events';
-
+        $event = Events::where('slug', $slug)->first();
         $data = compact('title');
         return view('back-page.events.edit', $data);
     }
