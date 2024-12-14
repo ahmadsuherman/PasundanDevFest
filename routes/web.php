@@ -55,7 +55,7 @@ Route::prefix('admin')->group(function () {
     Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
     Route::get('/admin/speakers/{id}/detail', [SpeakerController::class, 'detailMember'])->name('detailMember');
 
-    Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');
+    Route::get('speakers' , 'verified', [SpeakerController::class, 'index'])->name('speakers.index');
     Route::get('speakers/create', [SpeakerController::class, 'create'])->name('speakers.create');
     Route::post('speakers/create', [SpeakerController::class, 'store'])->name('speakers.store');
     Route::get('speakers/{username}/edit', [SpeakerController::class, 'edit'])->name('speakers.edit');

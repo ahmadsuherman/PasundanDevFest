@@ -26,7 +26,7 @@ class SpeakerController extends Controller
         return view('back-page.speakers.index', $data);
 
         $speaker = User::latest()->paginate(10);
-        return new SpeakerResource(true, 'List Data Speaker', $speakers);
+        return new SpeakerController(true, 'List Data Speaker', $speakers);
     }
 
     public function create()
