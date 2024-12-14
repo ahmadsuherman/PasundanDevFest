@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -40,5 +41,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function scopeFilter(Builder $query, array $filters): void
+    {
+        $query->when($filters['search'] ?? false,
+        fn ($query, $search) =>
+            $query->where('fullname', 'like', '%' . $search . '%')
+        );
+    }
+
+    public function event_members()
+    {
+        return $this->belongsToMany(Event::class, 'event_members', 'member_id', 'event_id')
+        ->withPivot('created_at', 'payment_status');
+    }
+
+    public function event_spekaers()
+    {
+        return $this->belongsToMany(Event::class, 'event_speakers', 'member_id', 'event_id');
     }
 }

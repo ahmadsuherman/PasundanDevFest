@@ -15,20 +15,27 @@ use App\Http\Controllers\FrontPage\RegisterEventController;
 use App\Http\Controllers\FrontPage\MembersController;
 use App\Http\Controllers\FrontPage\LoginController;
 use App\Http\Controllers\FrontPage\RegisterController;
+use App\Http\Controllers\FrontPage\SpeakerController as FrontSpeakerController;
 
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
-Route::get('/events', [EventsController::class, 'showEvents']);
+
+Route::get('/events', [EventsController::class, 'index'])->name('events');
+
 Route::get('/events/{slug}', [EventsController::class, 'showDetailEvents']);
 Route::get('/registerevent}', [EventsController::class, 'showRegisterEvent']);
-Route::get('/members', [MembersController::class, 'showMembers']);
+
+Route::get('/members', [MembersController::class, 'showMembers'])->name('members');
+Route::get('/speakers', [FrontSpeakerController::class, 'index'])->name('speakers');
+
 Route::get('/login', [LoginController::class, 'showLogin']);
 Route::get('/register', [RegisterController::class, 'showRegister']);
 
-Route::post('logout', function(){
-    return redirect('/');
-});
+Route::get('login/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function(){
@@ -64,4 +71,16 @@ Route::prefix('admin')->group(function () {
     Route::get('events/{slug}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::patch('events/{slug}/edit', [EventController::class, 'update'])->name('events.update');
     Route::get('events/{username}', [EventController::class, 'show'])->name('events.show');
+});
+
+Route::prefix('members')->group(function () {
+    Route::get('/dashboard', function(){
+        return view('back-page.dashboard', ['title' => 'Dashboard']);
+    });
+});
+
+Route::prefix('speakers')->group(function () {
+    Route::get('/dashboard', function(){
+        return view('back-page.dashboard', ['title' => 'Dashboard']);
+    });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackPage;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -34,7 +35,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('categories.index')->with('success', 'Categori berhasil ditambahkan.');
+        // $validatedData = $request->validate([
+        //     'name'          => 'required|unique:categories',
+        //     'slug'          => 'required|unique:categories',
+        // ]);
+
+        // Category::create($validatedData);
+
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     /**
