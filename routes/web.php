@@ -51,6 +51,7 @@ Route::prefix('admin')->group(function () {
     Route::post('admin/members', [MemberController::class, 'store'])->name('admin.members.store');
     Route::get('members/{username}/edit', [MemberController::class, 'edit'])->name('members.edit');
     Route::patch('members/{username}/edit', [MemberController::class, 'update'])->name('members.update');
+    Route::delete('members/{id}', [SpeakerController::class, 'destroy'])->name('members.destroy');
     Route::get('members/{username}', [MemberController::class, 'show'])->name('members.show');
 
     Route::get('speakers', [SpeakerController::class, 'index'])->name('speakers.index');

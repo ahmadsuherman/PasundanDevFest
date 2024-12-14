@@ -69,8 +69,7 @@ class SpeakerController extends Controller
     } catch (\Exception $e) {
         return redirect()->route('speakers.index')->with('error', 'Terjadi kesalahan saat menghapus speaker.');
     }
-}
-
+    }
 
     public function show($username)
     {

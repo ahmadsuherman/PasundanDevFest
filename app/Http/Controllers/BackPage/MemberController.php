@@ -54,6 +54,16 @@ class MemberController extends Controller
         return view('back-page.members.edit', $data);
     }
 
+    public function destroy($id)
+    {
+        $member = User::findOrFail($id);
+        try {$member->delete();
+        return redirect()->route('members.index')->with('success', 'Speaker berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('members.index')->with('error', 'Terjadi kesalahan saat menghapus speaker.');
+    }
+    }
+
     public function show($username)
     {
         $title = 'Members';
