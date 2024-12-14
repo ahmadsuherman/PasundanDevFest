@@ -32,6 +32,9 @@
                 </div>
             </caption>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                @foreach ($member as $username)
+                    
+                @endforeach
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         No
@@ -52,6 +55,7 @@
                         Action
                     </th>
                 </tr>
+                @endforeach
             </thead>
             <tbody>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

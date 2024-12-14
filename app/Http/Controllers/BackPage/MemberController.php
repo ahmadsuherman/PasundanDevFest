@@ -5,12 +5,15 @@ namespace App\Http\Controllers\BackPage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 
 class MemberController extends Controller
 {
     public function index(Request $request)
     {
         $title = 'Members';
+        $member = Member::latst()->get();
+        
         $member = User::when($request->search, function($query) use ($request) {
             $query->where('username', 'like', '%' .$request->search. '%')
                     ->orWhere('fullname', 'like', '%' .$request->search. '%')
@@ -74,6 +77,24 @@ class MemberController extends Controller
 
     public function update(Request $request, string $username)
     {
+        $member = User::where('username', $username)->firstOrFail();
+
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $member->id,
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $member->id,
+            'roles' => 'required|in:Admin,User,Speaker',
+            'bio' => 'nullable|string|max:500',
+        ]);
+
+        $member->update([
+            'username' => $request->username,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'roles' => $request->roles,
+            'bio' => $request->bio,
+        ]);
+
         return redirect()->route('members.index')->with('success', 'Member berhasil diperbarui.');
     }
 
