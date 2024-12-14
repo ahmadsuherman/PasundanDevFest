@@ -8,15 +8,21 @@ use Pest\Collision\Events;
 
 class EventController extends Controller
 {
-    public function index()
-    {
-        $title = 'Events';
+    public function index(Request $request)
+{
+    $query = Event::query();
 
-        $events = Events::all();
-
-        $data = compact('title','event');
-        return view('back-page.events.index', $data);
+    if ($request->has('search')) {
+        $searchTerm = $request->input('search');
+        $query->where('title', 'like', '%' . $searchTerm . '%')
+              ->orWhere('location', 'like', '%' . $searchTerm . '%')
+              ->orWhere('description', 'like', '%' . $searchTerm . '%');
     }
+
+    $events = $query->paginate(10);
+
+    return view('events.index', compact('events'));
+}
 
 
     public function create()
