@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\BackPage;
 
-use App\Http\Controllers\Controller;
+use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Database\Seeders\UserSeeder;
+use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
 {
@@ -23,8 +26,10 @@ class MemberController extends Controller
         return view('back-page.members.create', $data);
     }
 
-    public function edit()
+    public function edit($username)
     {
+        // Mengambil data user berdasarkan username
+        $user = User::where('username', $username)->firstOrFail();
         $title = 'Members';
 
         $data = compact('title');
