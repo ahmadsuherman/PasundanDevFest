@@ -75,4 +75,13 @@ public function update(Request $request, string $slug)
     
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
+
+    public function destroy($id)
+{
+    $event = Event::findOrFail($id);
+    $event->delete();
+
+    return redirect()->route('events.index')
+        ->with('success', 'Event berhasil dihapus.');
+}
 }
