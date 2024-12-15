@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\BackPage;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Pest\Collision\Events;
+use App\Models\Event;
 
 class EventController extends Controller
 {
     public function index(Request $request)
-{
-    $query = Event::query();
+    {
+        $query = Event::query();
 
-    if ($request->has('search')) {
-        $searchTerm = $request->input('search');
-        $query->where('title', 'like', '%' . $searchTerm . '%')
-              ->orWhere('location', 'like', '%' . $searchTerm . '%')
-              ->orWhere('description', 'like', '%' . $searchTerm . '%');
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where('title', 'like', '%' . $searchTerm . '%')
+                ->orWhere('location', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%');
+        }
+
+        $events = $query->paginate(10);
+
+        return view('events.index', compact('events'));
     }
-
-    $events = $query->paginate(10);
-
-    return view('events.index', compact('events'));
-}
 
 
     public function create()
