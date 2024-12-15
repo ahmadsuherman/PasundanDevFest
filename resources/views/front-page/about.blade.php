@@ -1,33 +1,37 @@
 <x-frontPage.layout>
     <x-slot:title>About PasundanDev</x-slot:title>
 
-    <section class="py-12">
-        <div class="max-w-screen-lg px-6 mx-auto text-center">
-            <h1 class="text-3xl font-extrabold text-gray-900 md:text-4xl mb-4">About PasundanDev</h1>
-            <p class="mt-4 text-lg text-gray-700">
+    <section class="members">
+      <div class="w-full-md">
+        <h2 class="text-3xl font-bold mb-2 text-center">{{ $title }}</h2>
+
+        <div class="max-w-screen-lg m-auto text-center">
+            <p class="text-lg text-gray-700 text-justify">
                PasundanDev adalah komunitas teknologi yang berfokus pada pengembangan ekosistem bagi para pengembang perangkat lunak, programmer, engineer, dan individu lain
                yang memiliki passion di bidang teknologi. Kami hadir untuk menyediakan ruang bagi para profesional maupun pemula untuk berbagi pengetahuan, berdiskusi,
              dan berkolaborasi dalam menciptakan solusi teknologi yang inovatif.
             </p>
-            <p class="mt-4 text-lg text-gray-700">
+            <p class="mt-4 text-lg text-gray-700 text-justify">
                Kami percaya bahwa teknologi adalah fondasi masa depan, dan kolaborasi adalah kunci untuk mencapainya. 
                Melalui berbagai kegiatan seperti workshop, seminar, hackathon, hingga diskusi daring, PasundanDev berkomitmen untuk 
                menjadi platform yang mempertemukan talenta-talenta terbaik dari berbagai latar belakang dan keahlian. 
                Tujuan kami adalah membantu para anggota untuk tumbuh, belajar, dan memberikan kontribusi nyata bagi komunitas teknologi lokal maupun global.
             </p>
-            <p class="mt-4 text-lg text-gray-700">
+            <p class="mt-4 text-lg text-gray-700 text-justify">
                 Sebagai bagian dari misi kami, PasundanDev juga berperan aktif dalam mendorong perkembangan teknologi di Jawa Barat, 
                 khususnya dalam menciptakan peluang dan inovasi berbasis teknologi yang bermanfaat bagi masyarakat luas. Bersama PasundanDev, 
                 mari berkontribusi membangun komunitas teknologi yang inklusif, kolaboratif, dan siap menghadapi tantangan masa depan.
             </p>
         </div>
+        
+      </div>
     </section>
 
     <section class="py-12">
-        <div class="max-w-screen-lg px-6 mx-auto">
+        <div class="max-w-screen-lg mx-auto">
 
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-gray-900 md:text-4xl">Our Team</h2>
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold mb-2 text-center">Our Team</h2>
                 <p class="mt-4 text-lg text-gray-600">
                     Meet the dedicated team members who bring our vision to life.
                 </p>
@@ -97,4 +101,5 @@
             </div>
         </div>
     </section>
+    
 </x-frontPage.layout>

@@ -32,27 +32,25 @@ class EventController extends Controller
         return view('back-page.events.create', $data);
     }
 
-
-
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'nullable',
-        'date' => 'required|date',
-        'location' => 'required|max:255'
-    ]);
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable',
+            'date' => 'required|date',
+            'location' => 'required|max:255'
+        ]);
 
-    $event = new Event();
-    $event->title = $validatedData['title'];
-    $event->description = $validatedData['description'] ?? null;
-    $event->date = $validatedData['date'];
-    $event->location = $validatedData['location'];
+        $event = new Event();
+        $event->title = $validatedData['title'];
+        $event->description = $validatedData['description'] ?? null;
+        $event->date = $validatedData['date'];
+        $event->location = $validatedData['location'];
 
-    $event->save();
+        $event->save();
 
-    return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
-}
+        return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
+    }
 
     public function show($slug)
     {
@@ -62,12 +60,12 @@ class EventController extends Controller
         return view('back-page.events.show', $data);
     }
 
-public function update(Request $request, string $slug)
+    public function update(Request $request, string $slug)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-        ])
+        ]);
 
         $event = Event::where('slug', $slug)->firstOrFail();
 
@@ -77,11 +75,11 @@ public function update(Request $request, string $slug)
     }
 
     public function destroy($id)
-{
-    $event = Event::findOrFail($id);
-    $event->delete();
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
 
-    return redirect()->route('events.index')
-        ->with('success', 'Event berhasil dihapus.');
-}
+        return redirect()->route('events.index')
+            ->with('success', 'Event berhasil dihapus.');
+    }
 }
