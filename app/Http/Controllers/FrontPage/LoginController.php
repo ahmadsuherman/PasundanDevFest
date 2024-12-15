@@ -63,10 +63,19 @@ class LoginController extends Controller
                 return redirect('/register')->with('error', 'Email ' . $googleUser->getEmail() . ' sudah terdaftar silahkan silahkan login');
             } else {
 
+                $baseUsername = strtolower(str_replace(' ', '', $googleUser->getName()));
+                $username = $baseUsername;
+                $counter = 1;
+                
+                while (User::where('username', $username)->exists()) {
+                    $username = $baseUsername . $counter;
+                    $counter++;
+                }
+                
                 $user = User::create([
                     'google_id'         => $googleUser->getId(),
                     'fullname'          => $googleUser->getName(),
-                    'username'          => strtolower(str_replace(' ', '', $googleUser->getName())),
+                    'username'          => $username,
                     'email'             => $googleUser->getEmail(),
                     'email_verified_at' => Carbon::now(),
                     'password'          => Hash::make(env('GENERATE_PASSWORD')),
@@ -82,6 +91,7 @@ class LoginController extends Controller
             }
         } catch (\Exception $e) {
             session()->forget('role');
+            dd($e);
             return redirect('/login')->with('error', 'Google authentication failed');
         }
     }
