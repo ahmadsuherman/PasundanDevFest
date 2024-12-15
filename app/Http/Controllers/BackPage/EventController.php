@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\BackPage;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
@@ -32,7 +32,7 @@ class EventController extends Controller
         return view('back-page.events.create', $data);
     }
 
-    
+
 
     public function store(Request $request)
 {
@@ -70,9 +70,9 @@ public function update(Request $request, string $slug)
         ])
 
         $event = Event::where('slug', $slug)->firstOrFail();
-        
+
         $event->update($request->validated());
-    
+
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 

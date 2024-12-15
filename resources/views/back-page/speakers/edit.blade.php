@@ -1,29 +1,34 @@
 <x-backPage.layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <form data-form="validate" action="{{ route('speakers.update', 'user') }}" method="post" class="bg-white p-6">
+    <form data-form="validate" action="{{ route('speakers.update', ) }}" method="post" class="bg-white p-6">
         @csrf
         @method('PATCH')
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input type="text" name="username" id="username" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Username harus diisi" placeholder="Masukkan username" required="" data-parsley-trigger="keyup" value="user_">
+                <input type="text" name="username" id="username" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Username harus diisi" placeholder="Masukkan username" required="" data-parsley-trigger="keyup" value="{{ old('username', $speaker->username) }}">
             </div>
             
             <div>
                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap</label>
-                <input type="text" name="fullname" id="fullname" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Nama lengkap harus diisi" placeholder="Masukkan nama lengkap" required="" data-parsley-trigger="keyup" value="Fullname">
+                <input type="text" name="fullname" id="fullname" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Nama lengkap harus diisi" placeholder="Masukkan nama lengkap" required="" data-parsley-trigger="keyup" value="{{ old('fullname', $speaker->fullname) }}">
             </div>
             
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" name="email" id="email" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Email harus diisi" placeholder="Masukkan email" required="" data-parsley-trigger="keyup" value="user@gmail.com">
+                <input type="email" name="email" id="email" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Email harus diisi" placeholder="Masukkan email" required="" data-parsley-trigger="keyup" value="{{ old('email', $speaker->email) }}">
             </div>
             
             
             <div>
-                <label for="roles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                <input type="text" name="roles" id="roles" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  data-parsley-required-message="Peran harus diisi" placeholder="Masukkan peran" required="" data-parsley-trigger="keyup" value="Speaker">
+                <label for="roles" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
+                <select name="roles" id="roles" required
+                        class="rounded bg-gray-50 border text-gray-900 text-sm focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+                    <option value="Admin" {{ old('roles', $speaker->roles) == 'Admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="User" {{ old('roles', $speaker->roles) == 'User' ? 'selected' : '' }}>User</option>
+                    <option value="Speaker" {{ old('roles', $speaker->roles) == 'Speaker' ? 'selected' : '' }}>Speaker</option>
+                </select>
             </div>
         
         </div>
@@ -31,7 +36,7 @@
         <div class="grid gap-4 mb-4 sm:grid-cols-1">
         <div>
             <label for="bio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
-            <textarea rows="5" name="bio" id="bio" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
+            <textarea rows="5" name="bio" id="bio" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="">{{ old('bio', $speaker->bio) }}</textarea>
         </div>
 
         <div>
