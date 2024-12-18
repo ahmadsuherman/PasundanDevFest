@@ -156,7 +156,7 @@
     <div class="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 sm:justify-items-stretch md:grid-cols-3 md:gap-4 lg:gap-6 lg:grid-cols-4">
       @forelse($newMemberRegistrations as $newMemberRegistration)
       <div class="mx-auto flex w-full flex-col items-center gap-4 py-8 text-center md:px-8 md:py-4 lg:px-12">
-        <img src="{{ $newMemberRegistration->avatar }}" alt="{{ $newMemberRegistration->fullname }}" class="mb-4 inline-block h-40 w-40 rounded-full object-cover" />
+        <img src="{{ getAvatar($newMemberRegistration->avatar) }}" alt="{{ $newMemberRegistration->fullname }}" class="mb-4 inline-block h-40 w-40 rounded-full object-cover" />
         <p class="font-bold">{{ $newMemberRegistration->fullname }}</p>
         <p class="text-center text-sm text-gray-500"> {{ $newMemberRegistration->username }} </p>
       </div>

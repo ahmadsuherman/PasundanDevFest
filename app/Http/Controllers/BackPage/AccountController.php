@@ -44,9 +44,8 @@ class AccountController extends Controller
             $validated['avatar'] = Storage::url($path);
         }
 
-
         User::where('id', $user->id)->update($validated);
 
-        return back()->with('success', 'Akun berhasil diperbarui.');
+        return back()->with('success', 'Account has been updated succesfully');
     }
 }

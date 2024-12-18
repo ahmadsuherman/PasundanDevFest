@@ -13,8 +13,8 @@ class HomeController extends Controller
     {
         $title = 'Home';
 
-        $upcomingEvents = Event::where('start_date', '>', now())->orderBy('start_date', 'asc')->get();
-        $pastEvents = Event::where('start_date', '<', now())->orderBy('start_date', 'desc')->get();
+        $upcomingEvents = Event::where('start_date', '>', now())->where('status', true)->orderBy('start_date', 'asc')->get();
+        $pastEvents = Event::where('start_date', '<', now())->where('status', true)->orderBy('start_date', 'desc')->get();
         $newMemberRegistrations = User::where('roles', 'Members')->latest()->limit(8)->get();
 
         $data = compact('title', 'upcomingEvents', 'pastEvents', 'newMemberRegistrations');

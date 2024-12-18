@@ -5,6 +5,8 @@ namespace App\Http\Controllers\BackPage;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -15,9 +17,12 @@ class CategoryController extends Controller
     {
         $title = 'Categories';
 
-        $category = Category::all();
+        $categoryQuery = Category::filter(request(['search']))
+                        ->latest();
 
-        $data = compact('title', 'category');
+        $categories = $categoryQuery->paginate(10);
+        
+        $data = compact('title', 'categories');
         return view('back-page.categories.index', $data);
     }
 
@@ -35,21 +40,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'slug' => 'string'
-        ]);
+        $validated = $request->validated();
 
-        $category = Category::create([
-            'name' => $validated['name'],
-            'slug' => $validated['slug']
-        ]);
-
-        $category->save();
-
-        return redirect()->route('categories.index')->with('success', 'Categori berhasil ditambahkan.');
+        $category = Category::create($validated);
+        return redirect()->route('categories.index')->with('success', 'New category has been created succesfully');
     }
 
     /**
@@ -66,7 +62,9 @@ class CategoryController extends Controller
     public function edit(string $slug)
     {
         $title = 'Categories';
-        $category = Category::where('slug', $slug)->first();
+
+        $category = Category::where('slug', $slug)->firstOrFail();
+        
         $data = compact('title', 'category');
         return view('back-page.categories.edit', $data);
     }
@@ -74,17 +72,12 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $slug)
+    public function update(CategoryRequest $request, string $slug)
     {
-        $validated = $request->validate([
-            'name' => 'string|required',
-            'slug' => 'string'
-        ]);
-        $data = Category::where('slug', $slug)->first();
-        $data->name = $validated['name'];
-        $data->slug = $validated['slug'];
-        $data->save();
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui.');
+        $validated = $request->validated();
+        $category = Category::where('slug', $slug)->update($validated);
+
+        return redirect()->route('categories.index')->with('success', 'Category has been updated succesfully');
     }
 
     /**
@@ -92,8 +85,20 @@ class CategoryController extends Controller
      */
     public function destroy(string $slug)
     {
-        $data = Category::where('slug', $slug);
-        $data->delete();
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus.');
+        $category = Category::where('slug', $slug)->firstOrFail();
+        
+        if(count($category->events) > 0)
+        {
+            return back()->with('error', 'Categories cannot be deleted! delete all event categories '. $category->name . ' first');
+        }
+
+        $category->delete();
+        return redirect()->route('categories.index')->with('success', 'Category has been deleted succesfully');
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Category::class, 'slug', $request->name);
+        return response()->json(['slug' => $slug]);
     }
 }

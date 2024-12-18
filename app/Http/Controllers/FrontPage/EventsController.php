@@ -32,7 +32,7 @@ class EventsController extends Controller
             ->filter(request(['search']))
             ->latest();
 
-        $events = $eventsQuery->orderBy('start_date', 'desc')->paginate(8);
+        $events = $eventsQuery->where('status', true)->orderBy('start_date', 'desc')->paginate(8);
 
         $categories = Category::pluck('name', 'id');
             

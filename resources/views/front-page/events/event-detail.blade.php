@@ -4,7 +4,7 @@
     <h2 class="text-3xl font-bold mb-2">{{ $title }}</h2>
     
     <div class="site-container space-y-8 pt-10 sm:pt-10">
-        <img src="{{ asset('storage/events/'. $event->images) }}" class="select-none rounded-md bg-secondary mx-auto w-full max-w-4xl object-contain" width="900" height="450">
+        <img alt="{{ $event->title }}" src="{{ asset('storage/events/'. $event->images) }}" class="select-none rounded-md bg-secondary mx-auto w-full max-w-4xl object-contain" width="900" height="450">
         <section class="site-section flex flex-wrap justify-between gap-4">
             <div>
             </div>

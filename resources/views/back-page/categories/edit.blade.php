@@ -1,19 +1,29 @@
 <x-backPage.layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    @if ($errors->any())
+    <div class="bg-red-600 text-white p-3 rounded-lg mb-4">
+        <ul>
+            @foreach ($errors->all() as $key => $error)
+                <li>{{ $key+1 }}. {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form data-form="validate" action="/admin/categories/{{ $category->slug }}/edit" method="post" class="bg-white p-6">
         @csrf
         @method('PATCH')
         <h3 class="text-lg font-medium leading-none text-gray-900 dark:text-white">Edit {{ $title }}</h3>
-        <p class="mt-1 mb-4 pe-5 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+        <p class="mt-1 mb-4 pe-5 text-sm font-normal text-gray-500 dark:text-gray-400">Edit a category</p>
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                <input type="text" name="name" value="{{ $category->name }}" id="name" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" data-parsley-required-message="Nama harus diisi" placeholder="Masukkan nama" required="" data-parsley-trigger="keyup" value="Web Development" required="">
+                <input type="text" name="name" value="{{ old('name', $category->name) }}" id="name" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your category name" required="" data-parsley-trigger="keyup" required="">
             </div>
             <div>
                 <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-            <input readonly type="text" name="slug" value='{{ $category->slug }}' id="slug" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" value="web-development">
+            <input readonly type="text" name="slug" value="{{ old('slug', $category->name) }}" id="slug" class="rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" >
             </div>
             
         </div>
@@ -34,5 +44,17 @@
 
     @push('scripts')
     @include('components.parsley')
+    <script>
+        const name = document.querySelector('#name');
+        const slug = document.querySelector('#slug');
+        name.addEventListener('change', function() {
+          fetch('/admin/categories/checkSlug?name=' + name.value)
+            .then(response => response.json())
+            .then(data => slug.value = data.slug)
+        });
+        document.addEventListener('trix-file-accept', function(e) {
+          e.preventDefault();
+        })
+    </script>
     @endpush
 </x-backPage.layout>

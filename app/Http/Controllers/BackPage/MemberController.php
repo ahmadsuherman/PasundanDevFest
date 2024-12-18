@@ -5,106 +5,100 @@ namespace App\Http\Controllers\BackPage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use Storage;
+use Hash;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
     public function index(Request $request)
     {
         $title = 'Members';
-        $member = User::latest()->get();
+        
+        $memberQuery = User::where('roles', 'Members')->filter(request(['search']))
+        ->latest();
 
-        $member = User::when($request->search, function($query) use ($request) {
-            $query->where('username', 'like', '%' .$request->search. '%')
-                    ->orWhere('fullname', 'like', '%' .$request->search. '%')
-                  ->orWhere('email', 'like', '%' .$request->search. '%');
-            })->paginate(10)->appends(['search' => $request->search]);
+        $members = $memberQuery->paginate(10);
 
-
-        $data = compact('title');
+        $data = compact('title', 'members');
         return view('back-page.members.index', $data);
     }
 
     public function create()
     {
-        $title = 'Create Members';
+        $title = 'Members';
 
         $data = compact('title');
         return view('back-page.members.create', $data);
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'roles' => 'required|string',
-            'bio' => 'nullable|string',
-            'links' => 'nullable|string',
-         ]);
+        $validated = $request->validated();
 
-        User::create($validated);
+        $validated['password']          = Hash::make(env('GENERATE_PASSWORD'));
+        $validated['roles']             = 'Members';
+        $validated['is_verified']       = true;
+        $validated['email_verified_at'] = Carbon::now();
+        
+        if ($request->file('avatar')) {
+            $path = $request->file('avatar')->store('users', 'public');
+            
+            $validated['avatar'] = Storage::url($path);
+        }
 
-        return redirect()->route('members.index')->with('success', 'Member berhasil ditambahkan.');
+        $member = User::create($validated);
+        return redirect()->route('members.index')->with('success', 'New member has been created succesfully');
     }
 
-    public function edit()
+    public function edit($username)
     {
-        // Mengambil data user berdasarkan username
-        $user = User::where('username', $username)->firstOrFail();
         $title = 'Members';
 
-        $data = compact('title');
-        return view('back-page.members.edit', $data);
-    }
+        $member = User::where('roles', 'Members')->where('username', $username)->firstOrFail();
 
-    public function destroy($id)
-    {
-        $member = User::findOrFail($id);
-        try {$member->delete();
-        return redirect()->route('members.index')->with('success', 'Speaker berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect()->route('members.index')->with('error', 'Terjadi kesalahan saat menghapus speaker.');
-    }
+        $data = compact('title', 'member');
+        return view('back-page.members.edit', $data);
     }
 
     public function show($username)
     {
         $title = 'Members';
 
-        $data = compact('title');
+        $member = User::where('roles', 'Members')->where('username', $username)->firstOrFail();
+
+        $data = compact('title', 'member');
         return view('back-page.members.show', $data);
     }
 
-    public function update(Request $request, string $username)
+    public function update(UserRequest $request, string $username)
     {
-        $member = User::where('username', $username)->firstOrFail();
+        $validated = $request->validated();
 
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . $member->id,
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $member->id,
-            'roles' => 'required|in:Admin,User,Speaker',
-            'bio' => 'nullable|string|max:500',
-        ]);
+        if ($request->file('avatar')) {
+            $avatarPath = 'users/' . basename($request->oldAvatar);
+            if (Storage::disk('public')->exists($avatarPath)) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+        
+            $path = $request->file('avatar')->store('users', 'public');
+            
+            $validated['avatar'] = Storage::url($path);
+        }
 
-        $member->update([
-            'username' => $request->username,
-            'fullname' => $request->fullname,
-            'email' => $request->email,
-            'roles' => $request->roles,
-            'bio' => $request->bio,
-        ]);
+        User::where('roles', 'Members')->where('username', $username)
+        ->update($validated);
 
-        return redirect()->route('members.index')->with('success', 'Member berhasil diperbarui.');
+        return redirect('admin/members/'. $username)->with('success', 'Member has been updated succesfully');
     }
 
-    public function detailMember($id)
+    public function destroy(string $username)
     {
-        $member = User::findOrFail($id);
-        $title = 'Detail Member';
-
-        return view('back-page.members.detail', compact('title', 'member'));
+        $member = User::where('roles', 'Members')->where('username', $username)->firstOrFail();
+        
+        $member->delete();
+        return redirect()->route('members.index')->with('success', 'Member has been deleted succesfully');
     }
 }

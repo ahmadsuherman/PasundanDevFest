@@ -2,13 +2,13 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
     @if ($errors->any())
-        <div class="bg-red-600 text-white p-3 rounded-lg mb-4">
-            <ul>
-                @foreach ($errors->all() as $key => $error)
-                    <li>{{ $key+1 }}. {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div class="bg-red-600 text-white p-3 rounded-lg mb-4">
+        <ul>
+            @foreach ($errors->all() as $key => $error)
+                <li>{{ $key+1 }}. {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <form data-form="validate" action="{{ route('accounts.update') }}" method="post" class="bg-white p-6" enctype="multipart/form-data">
@@ -16,12 +16,12 @@
         @method('PATCH')
         <input type="hidden" name="oldAvatar" value="{{ Auth()->user()->avatar }}">
         <h3 class="text-lg font-medium leading-none text-gray-900 dark:text-white">{{ $title }}</h3>
-        <p class="mt-1 mb-4 pe-5 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+        <p class="mt-1 mb-4 pe-5 text-sm font-normal text-gray-500 dark:text-gray-400">Information Account</p>
         <div class="grid gap-4 mb-4 sm:grid-cols-1">
             <div>
                 <label for="avatar" class="block text-sm/6 font-medium text-gray-900">Avatar</label>
                 <div class="mt-2 flex items-center gap-x-3">
-                    <img class="img-preview size-24 text-gray-300 rounded-full" src="{{ Auth()->user()->avatar }}" alt="{{ Auth()->user()->fullname }}"/>
+                    <img class="img-preview size-24 text-gray-300 rounded-full" src="{{ getAvatar(Auth()->user()->avatar) }}" alt="{{ Auth()->user()->fullname }}"/>
                     <input onchange="previewImage()" type="file" name="avatar" id="avatar" class="btn-sm rounded bg-white text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" />
 
                 </div>
@@ -98,7 +98,7 @@
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>Tambah
+                    </svg>Add
                 </button>
             </div>
             @else
@@ -134,12 +134,10 @@
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>Tambah
+                    </svg>Add
                 </button>
             </div>
             @endif
-            
-            
             </div>
         </div>
 
@@ -147,7 +145,7 @@
         <svg class="w-5 h-5 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11 16h2m6.707-9.293-2.414-2.414A1 1 0 0 0 16.586 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.414a1 1 0 0 0-.293-.707ZM16 20v-6a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v6h8ZM9 4h6v3a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V4Z"/>
         </svg>
-        Simpan
+        &nbsp Save
         </button>
     </form>
 
@@ -192,7 +190,6 @@
         });
     });
 
-    // Sebelum form disubmit, kumpulkan data links dan tambahkan ke form
     document.querySelector('form[data-form="validate"]').addEventListener('submit', function(event) {
         const linkInputs = document.querySelectorAll('.link-group');
         const links = [];
@@ -201,17 +198,15 @@
             const url = linkInput.querySelector('input[type="url"]').value;
             const text = linkInput.querySelector('input[type="text"]').value;
 
-            // Pastikan link dan text tidak kosong sebelum ditambahkan
             if (url && text) {
                 links.push({ url: url, text: text });
             }
         });
 
-        // Tambahkan data links ke form sebagai hidden input
         const linksInput = document.createElement('input');
         linksInput.type = 'hidden';
-        linksInput.name = 'links'; // Kolom nama links
-        linksInput.value = JSON.stringify(links); // Konversi array ke JSON string
+        linksInput.name = 'links';
+        linksInput.value = JSON.stringify(links);
         this.appendChild(linksInput);
     });
 

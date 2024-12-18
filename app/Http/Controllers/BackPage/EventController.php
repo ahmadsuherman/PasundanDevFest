@@ -2,25 +2,48 @@
 
 namespace App\Http\Controllers\BackPage;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Category;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Str;
+use App\Http\Requests\EventRequest;
+use App\Models\User;
+use Storage;
+use App\Models\EventSpeaker;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Event::query();
+        $title = 'Events';
 
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-            $query->where('title', 'like', '%' . $searchTerm . '%')
-                ->orWhere('location', 'like', '%' . $searchTerm . '%')
-                ->orWhere('description', 'like', '%' . $searchTerm . '%');
-        }
+        $eventsQuery = Event::query()
+            ->when(request('category'), function ($query) {
+                $query->whereHas('category', function ($q) {
+                    if (request('category') != "All Category") {
+                        $q->where('category_id', request('category'));
+                    }
+                });
+            })
+            ->when(request('type'), function ($query) {
+                if (request('type') == "fee") {
+                    $query->where('is_paid', true);
+                } else if (request('type') == "free"){
+                    $query->where('is_paid', false);
+                } 
+            })
+            ->filter(request(['search']))
+            ->latest();
 
-        $events = $query->paginate(10);
+        $events = $eventsQuery->orderBy('start_date', 'desc')->paginate(8);
 
-        return view('events.index', compact('events'));
+        $categories = Category::pluck('name', 'id');
+            
+        $data = compact('title', 'events', 'categories');
+        
+        return view('back-page.events.index', $data);
     }
 
 
@@ -28,58 +51,120 @@ class EventController extends Controller
     {
         $title = 'Events';
 
-        $data = compact('title');
+        $categories = Category::pluck('name', 'id');
+        $speakers = User::where('roles', 'Speakers')->where('is_verified', true)->pluck('fullname', 'id');
+
+        $data = compact('title', 'categories', 'speakers');
         return view('back-page.events.create', $data);
     }
 
-    public function store(Request $request)
+    public function store(EventRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'nullable',
-            'date' => 'required|date',
-            'location' => 'required|max:255'
+        $validated = $request->validated();
+
+        if ($request->file('images')) {
+            $path = $request->file('images')->store('events', 'public');
+            
+            $validated['images'] = Storage::url($path);
+        }
+
+        $event = Event::create([
+            'title'         => $validated['title'],
+            'slug'          => $validated['slug'],
+            'start_date'    => $validated['start_date'],
+            'end_date'      => $validated['end_date'],
+            'category_id'   => $validated['category_id'],
+            'location'      => $validated['location'],
+            'is_paid'       => $validated['is_paid'],
+            'price'         => $validated['price'],
+            'images'        => $validated['images'],
+            'description'   => $validated['description'],
+            'status'        => $validated['status'],
         ]);
 
-        $event = new Event();
-        $event->title = $validatedData['title'];
-        $event->description = $validatedData['description'] ?? null;
-        $event->date = $validatedData['date'];
-        $event->location = $validatedData['location'];
+        foreach($validated['speakers'] as $speaker) {
+            EventSpeaker::create([
+                'speaker_id' => $speaker, 
+                'event_id'   => $event->id
+            ]);
+        }
+    
+        return redirect()->route('events.index')->with('success', 'New event has been created succesfully');
+    }
 
-        $event->save();
+    public function edit($slug)
+    {
+        $title = 'Events';
+        $event = Event::where('slug', $slug)->firstOrFail();
+    
+        $categories = Category::pluck('name', 'id');
+        $speakers = User::where('roles', 'Speakers')->where('is_verified', true)->pluck('fullname', 'id');
 
-        return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
+        $speakerIds = $event->speakers->pluck('id')->toArray();
+        
+        $data = compact('title', 'event', 'categories', 'speakers', 'speakerIds');
+        return view('back-page.events.edit', $data);
     }
 
     public function show($slug)
     {
         $title = 'Events';
 
-        $data = compact('title');
+        $event = Event::where('slug', $slug)->firstOrFail();
+        
+        $data = compact('title', 'event');
         return view('back-page.events.show', $data);
     }
 
-    public function update(Request $request, string $slug)
+    public function update(EventRequest $request, string $slug)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+        $validated = $request->validated();
+        
+        if ($request->file('images')) {
+            $imagesPath = 'events/' . basename($request->oldImages);
+            if (Storage::disk('public')->exists($imagesPath)) {
+                Storage::disk('public')->delete($imagesPath);
+            }
+        
+            $path = $request->file('images')->store('events', 'public');
+            
+            $validated['images'] = Storage::url($path);
+        }
 
         $event = Event::where('slug', $slug)->firstOrFail();
 
-        $event->update($request->validated());
+        $event->update([
+            'title'         => $validated['title'],
+            'slug'          => $validated['slug'],
+            'start_date'    => $validated['start_date'],
+            'end_date'      => $validated['end_date'],
+            'category_id'   => $validated['category_id'],
+            'location'      => $validated['location'],
+            'is_paid'       => $validated['is_paid'],
+            'price'         => $validated['price'],
+            'images'        => $validated['images'] ?? $request->oldImages,
+            'description'   => $validated['description'],
+            'status'        => $validated['status'],
+        ]);
 
-        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
+        $event->speakers()->sync($validated['speakers']);
+    
+        return redirect()->route('events.index')->with('success', 'Event has been updated succesfully');
     }
 
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::where('slug', $slug)->firstOrFail();
+
         $event->delete();
 
         return redirect()->route('events.index')
-            ->with('success', 'Event berhasil dihapus.');
+            ->with('success', 'Event has been deleted succesfully');
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Event::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }

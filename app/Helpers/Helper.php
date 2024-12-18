@@ -33,3 +33,31 @@ if(!function_exists('formatDate')){
     }
 }
 
+if(!function_exists('getAvatar')){
+    function getAvatar($avatar)
+    {
+        return $avatar ? $avatar : asset('default-avatar.jpg');
+    }
+}
+
+if(!function_exists('getImages')){
+    function getImages($images)
+    {
+        return $images ? $images : asset('default-event.png');
+    }
+}
+
+if(!function_exists('formatDateTime')){
+    function formatDateTime($dateTime)
+    {
+        $date = date('F d, Y', strtotime($dateTime));
+
+        // Format jam menjadi "H:i" (contoh: 11:00)
+        $time = date('H:i', strtotime($dateTime));
+
+        // Gabungkan format menjadi satu string
+        return "{$date} — {$time} WIB";
+    }
+}
+
+

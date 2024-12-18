@@ -4,118 +4,109 @@ namespace App\Http\Controllers\BackPage;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\table;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Container\Attributes\DB;
+use App\Http\Requests\UserRequest;
+use Storage;
+use Hash;
+use Carbon\Carbon;
 
 class SpeakerController extends Controller
 {
     public function index(Request $request)
     {
         $title = 'Speakers';
+        
+        $speakerQuery = User::where('roles', 'Speakers')->filter(request(['search']))
+        ->latest();
 
-        $speakers = User::when($request->search, function ($query) use ($request) {
-            $query->where('username', 'like', '%' . $request->search . '%')
-                ->orWhere('fullname', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%');
-        })->paginate(10)->appends(['search' => $request->search]);
+        $speakers = $speakerQuery->paginate(10);
 
-        $data = compact('title');
+        $data = compact('title', 'speakers');
         return view('back-page.speakers.index', $data);
-
-        $speaker = User::latest()->paginate(10);
-        return new SpeakerController(true, 'List Data Speaker', $speakers);
     }
 
     public function create()
     {
-        $title = 'Create Speakers';
+        $title = 'Speakers';
 
         $data = compact('title');
         return view('back-page.speakers.create', $data);
     }
 
-    public function store(Request $request)
+
+    public function store(UserRequest $request)
     {
-        // dd($request->all());
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users,username',
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'roles' => 'required|in:Admin,User,Speaker',
-            'bio' => 'nullable|string|max:500',
-        ]);
+        $validated = $request->validated();
 
-        User::create([
-            'username' => $request->username,
-            'fullname' => $request->fullname,
-            'email' => $request->email,
-            'roles' => $request->roles,
-            'bio' => $request->bio,
-            'password' => Hash::make('defaultpassword'),
-        ]);
+        $validated['password']          = Hash::make(env('GENERATE_PASSWORD'));
+        $validated['roles']             = 'Speakers';
+        $validated['is_verified']       = true;
+        $validated['email_verified_at'] = Carbon::now();
+        
+        if ($request->file('avatar')) {
+            $path = $request->file('avatar')->store('users', 'public');
+            
+            $validated['avatar'] = Storage::url($path);
+        }
 
-        return redirect()->back();
+        $speaker = User::create($validated);
+        return redirect()->route('speakers.index')->with('success', 'New Speaker has been created succesfully');
     }
 
     public function edit($username)
     {
-        $title = 'EditSpeakers';
+        $title = 'Speakers';
 
-        $speaker = User::where('username', $username)->firstOrFail();
+        $speaker = User::where('roles', 'Speakers')->where('username', $username)->firstOrFail();
 
-        return view('back-page.speakers.edit', compact('title', 'speaker'));
-    }
-
-    public function destroy($id)
-    {
-        $speakers = User::findOrFail($id);
-        try {
-            $speakers->delete();
-            return redirect()->route('speakers.index')->with('success', 'Speaker berhasil dihapus.');
-        } catch (\Exception $e) {
-            return redirect()->route('speakers.index')->with('error', 'Terjadi kesalahan saat menghapus speaker.');
-        }
+        $data = compact('title', 'speaker');
+        return view('back-page.speakers.edit', $data);
     }
 
     public function show($username)
     {
-        $title = 'Speaker';
+        $title = 'Speakers';
 
-        $data = compact('title');
+        $speaker = User::where('roles', 'Speakers')->where('username', $username)->firstOrFail();
+
+        $data = compact('title', 'speaker');
         return view('back-page.speakers.show', $data);
     }
 
-    public function update(Request $request, string $username)
+    public function update(UserRequest $request, string $username)
     {
-        $speakers = User::where('username', $username)->firstOrFail();
+        $validated = $request->validated();
 
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . $speakers->id,
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $speakers->id,
-            'roles' => 'required|in:Admin,User,Speaker',
-            'bio' => 'nullable|string|max:500',
-        ]);
+        if ($request->file('avatar')) {
+            $avatarPath = 'users/' . basename($request->oldAvatar);
+            if (Storage::disk('public')->exists($avatarPath)) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+        
+            $path = $request->file('avatar')->store('users', 'public');
+            
+            $validated['avatar'] = Storage::url($path);
+        }
 
-        $speakers->update([
-            'username' => $request->username,
-            'fullname' => $request->fullname,
-            'email' => $request->email,
-            'roles' => $request->roles,
-            'bio' => $request->bio,
-        ]);
+        User::where('roles', 'Speakers')->where('username', $username)
+        ->update($validated);
 
-        return redirect()->route('speakers.index')->with('success', 'Speaker berhasil diperbarui.');
+        return redirect('admin/speakers/'. $username)->with('success', 'Speaker has been updated succesfully');
     }
 
-    public function detailSpeaker($id)
+    public function destroy(string $username)
     {
-        $speakers = User::findOrFail($id); 
-        $title = 'Detail Speaker';
+        $speaker = User::where('roles', 'Speakers')->where('username', $username)->firstOrFail();
+        
+        $speaker->delete();
+        return redirect()->route('speakers.index')->with('success', 'Speaker has been deleted succesfully');
+    }
 
-        return view('back-page.speakers.detail', compact('title', 'speaker'));
+    public function verified($username)
+    {
+        $speaker = User::where('roles', 'Speakers')->where('username', $username)->firstOrFail();
+        
+        $speaker->update(['is_verified' => true]);
+        return redirect()->route('speakers.index')->with('success', 'Speaker has verified succesfully');
     }
 }

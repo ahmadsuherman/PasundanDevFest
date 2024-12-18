@@ -80,33 +80,33 @@ class UserSeeder extends Seeder
             'links'             => null,
         ]);
 
-        // for($i = 0; $i < 20; $i++){
-        //     User::create([
-        //         'username'          => 'speaker' . $i,
-        //         'fullname'          => 'Speaker' . $i,
-        //         'email'             => 'speaker'. $i .'@gmail.com',
-        //         'email_verified_at' => Carbon::now(),
-        //         'password'          => Hash::make('password'),
-        //         'roles'             => 'Speakers',
-        //         'is_verified'       => true,
-        //         'avatar'            => null,
-        //         'bio'               => null,
-        //         'links'             => null
-        //     ]);
+        for($i = 0; $i < 20; $i++){
+            User::create([
+                'username'          => 'speaker' . $i,
+                'fullname'          => 'Speaker' . $i,
+                'email'             => 'speaker'. $i .'@gmail.com',
+                'email_verified_at' => Carbon::now(),
+                'password'          => Hash::make('password'),
+                'roles'             => 'Speakers',
+                'is_verified'       => true,
+                'avatar'            => null,
+                'bio'               => null,
+                'links'             => null
+            ]);
 
             
-        //     User::create([
-        //         'username'          => 'member' . $i,
-        //         'fullname'          => 'Member' . $i,
-        //         'email'             => 'member'. $i .'@gmail.com',
-        //         'email_verified_at' => Carbon::now(),
-        //         'password'          => Hash::make('password'),
-        //         'roles'             => 'Members',
-        //         'is_verified'       => true,
-        //         'avatar'            => null,
-        //         'bio'               => null,
-        //         'links'             => null
-        //     ]);
-        // }
+            User::create([
+                'username'          => 'member' . $i,
+                'fullname'          => 'Member' . $i,
+                'email'             => 'member'. $i .'@gmail.com',
+                'email_verified_at' => Carbon::now(),
+                'password'          => Hash::make('password'),
+                'roles'             => 'Members',
+                'is_verified'       => true,
+                'avatar'            => null,
+                'bio'               => null,
+                'links'             => null
+            ]);
+        }
     }
 }

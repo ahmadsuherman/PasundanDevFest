@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Event extends Model
 {
+    use Sluggable;
+    
     protected $with = ['category', 'members', 'speakers'];
 
-    protected $guarder = [];
+    protected $guarded = [];
 
     public function category()
     {
