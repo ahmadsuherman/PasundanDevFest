@@ -16,7 +16,7 @@ use App\Http\Controllers\FrontPage\MembersController;
 use App\Http\Controllers\FrontPage\LoginController;
 use App\Http\Controllers\FrontPage\RegisterController;
 use App\Http\Controllers\FrontPage\SpeakerController as FrontSpeakerController;
-
+use App\Http\Controllers\FrontPage\PaymentsController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
@@ -24,7 +24,12 @@ Route::get('/about', [AboutController::class, 'index']);
 Route::get('/events', [EventsController::class, 'index'])->name('events');
 
 Route::get('/events/{slug}', [EventsController::class, 'showDetailEvents']);
-Route::get('/registerevent}', [EventsController::class, 'showRegisterEvent']);
+
+Route::middleware(['auth', 'role:Members'])->group(function () {
+    Route::get('/events/{slug}/register', [EventsController::class, 'showRegisterEvent']);
+    Route::post('/events/{slug}/register', [PaymentsController::class, 'store'])->name('payments.store');
+    Route::post('/events/{slug}/callback', [PaymentsController::class, 'receiveCallback'])->name('midtrans.callback');    
+});
 
 Route::get('/members', [MembersController::class, 'showMembers'])->name('members');
 Route::get('/speakers', [FrontSpeakerController::class, 'index'])->name('speakers');
@@ -42,6 +47,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middl
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
     
     Route::get('/dashboard', function(){
+        
         return view('back-page.dashboard', ['title' => 'Dashboard']);
     });
 

@@ -16,26 +16,26 @@ class EventSeeder extends Seeder
     {
         Event::create([
             'category_id'       => 1,
-            'slug'              => 'tech-meetup:academic-&-industry-machine-learning',
+            'slug'              => 'tech-meetup-academic-and-industry-machine-learning',
             'title'             => 'Tech Meetup: Academic & Industry Machine Learning',
             'description'       => 'Talkshow spesial dengan para developer legendaris di Bandung dari dua sisi karir',
             'images'            => '/storage/events/default-event.png',
-            'start_date'        => Carbon::now(),
-            'end_date'          => Carbon::now(),
+            'start_date'        => Carbon::now()->addWeekdays(4),
+            'end_date'          => Carbon::now()->addWeekdays(4),
             'location'          => 'BLOCK71 Bandung, Innovation Factory, Jl. Ir. H. Juanda No.108, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132',
             'status'            => true,
-            'is_paid'           => false,
-            'price'             => null
+            'is_paid'           => true,
+            'price'             => 100000
         ]);
 
         Event::create([
             'category_id'       => 2,
-            'slug'              => 'tech-meetup:-ai-&-ml-drama',
+            'slug'              => 'tech-meetup-ai-and-ml-drama',
             'title'             => 'Tech Meetup: AI & ML Drama',
             'description'       => 'Membahas Artificial Intelligence (AI) & Machine Learning (ML)',
             'images'            => '/storage/events/default-event.png',
-            'start_date'        => Carbon::now(),
-            'end_date'          => Carbon::now(),
+            'start_date'        => Carbon::now()->addWeekdays(4),
+            'end_date'          => Carbon::now()->addWeekdays(4),
             'location'          => 'BLOCK71 Bandung, Innovation Factory, Jl. Ir. H. Juanda No.108, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132',
             'status'            => true,
             'is_paid'           => false,
@@ -44,7 +44,7 @@ class EventSeeder extends Seeder
 
         Event::create([
             'category_id'       => 3,
-            'slug'              => 'tech-meetup:-backend-dramaa',
+            'slug'              => 'tech-meetup-backend-drama',
             'title'             => 'Tech Meetup: Backend Drama',
             'description'       => 'Membahas situasi backend terkini, spesifik bahasa pemrograman (JS/TS, Java, PHP, dsb), library/framework (Node.js, Spring, Laravel, dsb), arsitektur, komunitas, dsb',
             'images'            => '/storage/events/default-event.png',
@@ -58,7 +58,7 @@ class EventSeeder extends Seeder
 
         Event::create([
             'category_id'       => 4,
-            'slug'              => 'tech-meetup:-product-engineering++',
+            'slug'              => 'tech-meetup-product-engineering',
             'title'             => 'Tech Meetup: Product Engineering++',
             'description'       => 'Meetup santai membahas Product Engineering, MVP (Minimum Viable Product), Team Scaling, Startup, ++',
             'images'            => '/storage/events/default-event.png',
@@ -72,8 +72,8 @@ class EventSeeder extends Seeder
 
         Event::create([
             'category_id'       => 5,
-            'slug'              => 'Tech Meetup: Frontend Drama',
-            'title'             => 'tech-meetup:-frontend-drama',
+            'slug'              => 'tech-meetup-frontend-drama',
+            'title'             => 'Tech Meetup: Frontend Drama',
             'description'       => 'Membahas situasi frontend, spesifik library/framework (React, Vue, Angular, dsb), arsitektur, komunitas, dsb',
             'images'            => '/storage/events/default-event.png',
             'start_date'        => Carbon::now(),

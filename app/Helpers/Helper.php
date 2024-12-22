@@ -5,7 +5,7 @@ use Carbon\Carbon;
 if (!function_exists('formatRupiah')) {
     function formatRupiah($number)
     {
-        return 'Rp ' . number_format($number, 0, ',', '.');
+        return 'Rp' . number_format($number, 0, ',', '.');
     }
 }
 
@@ -57,6 +57,21 @@ if(!function_exists('formatDateTime')){
 
         // Gabungkan format menjadi satu string
         return "{$date} — {$time} WIB";
+    }
+}
+
+if(!function_exists('paymentStatus')){
+    function paymentStatus($status)
+    {
+        if($status == 'Success'){
+            $status = 'green';
+        } else if($status == 'Pending'){
+            $status = 'yellow';
+        } else {
+            $status = 'red';
+        }
+        
+        return $status;
     }
 }
 

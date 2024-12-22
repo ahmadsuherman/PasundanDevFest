@@ -48,7 +48,7 @@
         <div class="flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:gap-8">
           <div>
             <a class="focus-ring block transition hover:opacity-75 " href="{{ url('events/'. $upcomingEvent->slug) }}">
-              <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{ $upcomingEvent->title }}" src="{{ asset('storage/events/' . $upcomingEvent->images) }}">
+              <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{{ $upcomingEvent->title }}}" src="{{ getImages($upcomingEvent->images) }}">
             </a>
           </div>
           <div class="flex-1 shrink-0 space-y-4">
@@ -101,7 +101,7 @@
           <div class="flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:gap-8">
             <div>
               <a class="focus-ring block transition hover:opacity-75 " href="{{ url('events/'. $pastEvent->slug) }}">
-                <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{ $pastEvent->title }}" src="{{ asset('storage/events/' . $pastEvent->images) }}">
+                <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{ $pastEvent->title }}" src="{{ getImages($pastEvent->images) }}">
               </a>
             </div>
             <div class="flex-1 shrink-0 space-y-4">

@@ -60,5 +60,20 @@ class EventsController extends Controller
         $data = compact('title', 'event');
         return view('front-page.events.event-detail', $data);
     }
-    
+
+    public function showRegisterEvent($slug)
+    {
+        $title = 'Events';
+
+        $user  = Auth()->user();
+        $event = Event::where('slug', $slug)->firstOrFail();
+        $paymentUser = null;
+
+        if ($event->isUserPaid($user->id)) {
+            $paymentUser = $event->payments->where('member_id', $user->id)->first();
+        }
+
+        $data = compact('title', 'event', 'paymentUser');
+        return view('front-page.events.register', $data);
+    }
 }

@@ -3,7 +3,7 @@
     <div class="flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:gap-8">
         <div>
         <a class="focus-ring block transition hover:opacity-75 " href="{{ url('events/'. $event->slug) }}">
-            <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{ $event->title }}" src="{{ asset('storage/events/' . $event->images) }}">
+            <img class="rounded aspect-video w-full bg-cover object-cover md:h-60 md:max-w-xl lg:h-80" alt="{{ $event->title }}" src="{{ getImages($event->images) }}">
         </a>
         </div>
         <div class="flex-1 shrink-0 space-y-4">
@@ -15,7 +15,7 @@
         </div>
         <p class="text-sm text-muted-foreground">
             <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $event->category->name }}</span>
-            <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $event->is_paid ? formatRupiah($event->price) : 'Gratis'}}</span>
+            <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $event->is_paid == 1 ? 'Fee' : 'Free'}}</span>
         </p>
         <p class="text-sm text-muted-foreground">
             <time>

@@ -6,9 +6,9 @@
       <div class="col-span-full xl:col-auto">
           <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
           <h3 class="text-xl font-semibold dark:text-white mb-4">Images</h3>   
-          <div class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
-                  <img class="mb-4 rounded-lg w-full h-full sm:mb-0 xl:mb-4 2xl:mb-0" src="{{ getImages($event->images) }}" alt="{{ $event->title }}">
-              </div>
+            <div class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+              <img class="mb-4 rounded-lg w-full h-full sm:mb-0 xl:mb-4 2xl:mb-0" src="{{ getImages($event->images) }}" alt="{{ $event->title }}">
+            </div>
           </div>
           <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
               <div class="flow-root">

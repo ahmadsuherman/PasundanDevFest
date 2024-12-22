@@ -31,6 +31,11 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'event_speakers', 'event_id', 'speaker_id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when($filters['search'] ?? false,
@@ -57,5 +62,12 @@ class Event extends Model
     {
         $now = Carbon::now();
         return $this->start_date > $now;
+    }
+
+    public function isUserPaid($userId)
+    {
+        return $this->payments()
+            ->where('member_id', $userId)
+            ->exists();
     }
 }
