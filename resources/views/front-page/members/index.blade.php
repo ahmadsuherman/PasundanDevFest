@@ -38,7 +38,8 @@
     @push('scripts')
     <script>
     $(document).ready(function() {
-        $('#default-search').on('input', function() {
+        $('#default-search').on('input', function(event) {
+            event.preventDefault();
             let query = $(this).val(); 
             fetchMembers(query);
         });

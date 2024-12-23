@@ -91,15 +91,18 @@
   @push('scripts')
   <script>
     $(function() {
-        $('#search').on('input', function() {
+        $('#search').on('input', function(event) {
+            event.preventDefault();
             fetchEvents();
         });
 
-        $('#select-category').on('change', function() {
+        $('#select-category').on('change', function(event) {
+            event.preventDefault();
             fetchEvents();
         });
 
-        $('#select-type').on('change', function() {
+        $('#select-type').on('change', function(event) {
+            event.preventDefault();
             fetchEvents();
         });
 
@@ -108,7 +111,6 @@
             let category = $('#select-category').val();
             let type = $('#select-type').val();
             
-            console.log(query, category, type)
             $.ajax({
                 url: "{{ route('events') }}", 
                 type: 'GET', 

@@ -2,8 +2,7 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <h2 class="text-3xl font-bold mb-2">{{ $title }}</h2>
     <div class="grid grid-cols-1 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
-        <div class="col-span-2">
-            
+        <div class="col-span-2">      
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                 <div class="flow-root">
                     <div class="space-y-2">
@@ -68,7 +67,6 @@
         <div class="col-span-full xl:col-auto">
             @if($paymentUser)
             <div class="w-full bg-white shadow-lg rounded-lg overflow-hidden mb-4">
-
                 <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
                     <h1 class="text-white text-2xl font-bold">PasundanDevFest</h1>
                     <p class="text-indigo-200 text-sm mt-1">{{ $paymentUser->event->title }}</p>
@@ -80,9 +78,15 @@
                         <span class="text-indigo-600 font-bold">{{ $paymentUser->payment_code }}</span>
                     </div>
 
+                    
                     <div class="flex justify-between items-center">
-                        <h2 class="font-semibold text-gray-800">Name:</h2>
+                        <h2 class="font-semibold text-gray-800">Member:</h2>
                         <span class="text-gray-700">{{ $paymentUser->member->fullname }}</span>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <h2 class="font-semibold text-gray-800">Category:</h2>
+                        <span class="text-gray-700">{{ $paymentUser->event->category->name }}</span>
                     </div>
 
                     <div class="flex justify-between items-center">
@@ -117,11 +121,18 @@
                 @if($paymentUser->payment_status == 'Success')
 
                 <div class="border-t p-6 flex justify-center">
-                    <img src="https://via.placeholder.com/100x100" alt="QR Code" class="w-24 h-24">
+                    {{ $qrCodeBase64 }}
                 </div>
 
                 <div class="bg-gray-50 p-4 text-center">
                     <p class="text-sm text-gray-500">Please show this ticket at the entrance.</p>
+                </div>
+
+                <div class="bg-gray-50 p-4 text-right">
+                    <a href="{{ route('exports.ticket', $event->slug) }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                    <span>Download</span>
+                    </a>
                 </div>
                 @endif
             </div>
@@ -145,8 +156,7 @@
                 <div class="space-y-3 mt-4">
                     <form id="payment-form" action="{{ route('payments.store', $event->slug) }}" method="post">
                         @csrf
-                        <button id="pay-button" type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Buy</button>
-                                    
+                        <button id="pay-button" type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Buy</button>            
                     </form>
                 </div>
             </div>

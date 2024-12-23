@@ -100,3 +100,5 @@ Route::prefix('speakers')->middleware(['auth', 'role:Speakers'])->group(function
         return view('back-page.dashboard', ['title' => 'Dashboard']);
     });
 });
+
+Route::get('/events/{slug}/export-ticket', [EventsController::class, 'exportPdf'])->name('exports.ticket');

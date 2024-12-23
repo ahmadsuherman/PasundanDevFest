@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Category;
 use Auth;
+use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EventsController extends Controller
 {
@@ -73,7 +76,28 @@ class EventsController extends Controller
             $paymentUser = $event->payments->where('member_id', $user->id)->first();
         }
 
-        $data = compact('title', 'event', 'paymentUser');
+        $qrCodeText = env('APP_URL') . '/events/' . $event->slug . '/register';
+
+        $qrCodeBase64 = QrCode::size(150)->generate($qrCodeText);
+
+        $data = compact('title', 'event', 'paymentUser', 'qrCodeBase64');
         return view('front-page.events.register', $data);
+    }
+
+    public function exportPdf($slug)
+    {
+
+        $event = Event::where('slug', $slug)->firstOrFail();
+        $user  = Auth()->user();
+
+        $paymentUser = Payment::where('event_id', $event->id)->where('member_id', $user->id)->firstOrFail();
+
+        $ticketData = env('APP_URL') . '/events/' . $event->slug . '/register';
+        $qrCodeBase64 = base64_encode(QrCode::size(200)->generate($ticketData));
+
+        $data = compact('paymentUser', 'qrCodeBase64');
+  
+        $pdf = Pdf::loadView('front-page.events.export-ticket', $data);
+        return $pdf->download($paymentUser->payment_code . '.pdf');
     }
 }
