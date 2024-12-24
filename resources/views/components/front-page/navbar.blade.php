@@ -18,8 +18,8 @@
         <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
             @guest
-            <x-front-page.nav-link href="/login" :active="request()->is('login')">Login</x-front-page.nav-link>
-            <x-front-page.nav-link href="/register" :active="request()->is('register')">Register</x-front-page.nav-link>
+            <x-front-page.nav-link href="/login" :active="request()->is('login')">Sign In</x-front-page.nav-link>
+            <x-front-page.nav-link href="/register" :active="request()->is('register')">Sign Up</x-front-page.nav-link>
             @else
             <!-- Profile dropdown -->
             <div class="relative ml-3">
@@ -83,8 +83,8 @@
         <x-front-page.nav-link href="/members" :active="request()->is('members')">Members</x-front-page.nav-link>
 
         @guest
-        <x-front-page.nav-link href="/login" :active="request()->is('login')">Login</x-front-page.nav-link>
-        <x-front-page.nav-link href="/register" :active="request()->is('register')">Register</x-front-page.nav-link>
+        <x-front-page.nav-link href="/login" :active="request()->is('login')">Sign In</x-front-page.nav-link>
+        <x-front-page.nav-link href="/register" :active="request()->is('register')">Sign Up</x-front-page.nav-link>
         @else
         <div class="border-t border-gray-700 pb-3 pt-4">
         <div class="flex items-center px-5">
