@@ -1,7 +1,15 @@
 <x-frontPage.layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <h2 class="text-3xl font-bold mb-2">{{ $title }}</h2>
-    <div class="grid grid-cols-1 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+    
+    @if(session('success'))
+    <div class="bg-green-500 text-white p-3 rounded-lg">
+        <ul>
+            <li>{{ session('success') }}</li>
+        </ul>
+    </div>
+    @endif
+    <div class="grid grid-cols-1 pt-4 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
         <div class="col-span-2">      
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                 <div class="flow-root">

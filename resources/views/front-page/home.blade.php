@@ -2,16 +2,12 @@
     <x-slot:title>Home - PasundanDev</x-slot:title>
 
 <section>
-  <!-- Hero Container -->
   <div class="mx-auto w-full max-w-7xl md:py-20">
-    <!-- Component -->
     <div class="grid items-center justify-items-start gap-8 sm:gap-20 lg:grid-cols-2">
-      <!-- Hero Content -->
       <div class="flex flex-col">
-        <!-- Hero Title -->
         <h1 class="mb-4 text-4xl font-bold md:text-6xl"> PasundanDevFest </h1>
         <p class="mb-6 max-w-lg text-sm text-gray-500 sm:text-xl md:mb-10 lg:mb-12"> A thriving community for developers, programmers, and tech enthusiasts in Pasundan. </p>
-        <!-- Hero Button -->
+        
         <div class="flex items-center">
           <a href="{{ url('/register') }}" class="mr-5 items-center rounded-md bg-black px-6 py-3 font-semibold text-white md:mr-6 lg:mr-8"> Join Us</a>
           <a href="{{ url('/events') }}" class="flex max-w-full items-center font-bold bg-slate-300 px-6 py-3 rounded">
@@ -20,22 +16,10 @@
           </a>
         </div>
       </div>
-      <!-- Hero Image -->
-      <img src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074" alt="" class="inline-block h-full w-full max-w-2xl" />
+      <img loading="eager" src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074" alt="" class="inline-block h-full w-full max-w-2xl" />
     </div>
   </div>
 </section>
-
-
-<!-- <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-      <img src="https://tailwindui.com/plus/img/ecommerce-images/product-page-02-secondary-product-shot.jpg" alt="Two each of gray, white, and black shirts laying flat." class="hidden aspect-[3/4] size-full rounded-lg object-cover lg:block">
-      <div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-        <img src="https://tailwindui.com/plus/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg" alt="Model wearing plain black basic tee." class="aspect-[3/2] size-full rounded-lg object-cover">
-        <img src="https://tailwindui.com/plus/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg" alt="Model wearing plain gray basic tee." class="aspect-[3/2] size-full rounded-lg object-cover">
-      </div>
-      <img src="https://tailwindui.com/plus/img/ecommerce-images/product-page-02-featured-product-shot.jpg" alt="Model wearing plain white basic tee." class="aspect-[4/5] size-full object-cover sm:rounded-lg lg:aspect-[3/4]">
-    </div>
-     -->
 
 <section class="upcoming-event">
   <div>
@@ -61,7 +45,7 @@
             
             <p class="text-sm text-muted-foreground">
             <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $upcomingEvent->category->name }}</span>
-            <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $upcomingEvent->is_paid ? formatRupiah($upcomingEvent->price) : 'Gratis'}}</span>
+            <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $upcomingEvent->is_paid ? 'Fee' : 'Free'}}</span>
             </p>
 
             <p class="text-sm text-muted-foreground">
@@ -114,7 +98,7 @@
               
               <p class="text-sm text-muted-foreground">
               <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $pastEvent->category->name }}</span>
-              <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $pastEvent->is_paid ? formatRupiah($pastEvent->price) : 'Gratis'}}</span>
+              <span class="bg-yellow-100 text-yellow-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $pastEvent->is_paid ? 'Fee' : 'Free'}}</span>
               </p>
 
               <p class="text-sm text-muted-foreground">

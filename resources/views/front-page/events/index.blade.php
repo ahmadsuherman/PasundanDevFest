@@ -69,7 +69,7 @@
                   </svg> {{ $event->location }}
                 </p>
                 <a class="bg-slate-300 inline-flex select-none items-center justify-center text-sm font-semibold ring-offset-background transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-8 gap-2 rounded-md px-3" href="{{ url('events/' . $event->slug) }}">View Event</a>
-                @if($event->is_registration_open)
+                @if($event->is_registration_open && (Auth::check() && Auth::user()->roles === 'Members' || Auth::guest()))
                 <a class="bg-gray-800 text-white inline-flex select-none items-center justify-center text-sm font-semibold ring-offset-background transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-8 gap-2 rounded-md px-3" href="{{ url('events/'. $event->slug . '/register') }}">Registration Event</a>
                 @endif
               </div>

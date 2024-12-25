@@ -69,7 +69,7 @@ class EventsController extends Controller
         $title = 'Events';
 
         $user  = Auth()->user();
-        $event = Event::where('slug', $slug)->firstOrFail();
+        $event = Event::where('slug', $slug)->where('start_date', '>', now())->firstOrFail();
         $paymentUser = null;
 
         if ($event->isUserPaid($user->id)) {

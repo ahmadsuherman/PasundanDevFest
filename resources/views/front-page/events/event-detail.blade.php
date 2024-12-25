@@ -134,7 +134,7 @@
                 <span>All Events</span>
             </a>
 
-            @if($event->is_registration_open && Auth::guest() || Auth::user()->roles === 'Members')
+            @if($event->is_registration_open && (Auth::check() && Auth::user()->roles === 'Members' || Auth::guest()))
             <a class="px-6 py-5 bg-gray-800 text-white inline-flex select-none items-center justify-center text-sm font-semibold ring-offset-background transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-8 gap-2 rounded-md px-3" 
                 href="{{ url('events/'. $event->slug . '/register') }}">
                 <span class="mr-2">Registration Event</span>

@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="hidden md:block">
-            <div class="ml-4 flex items-center md:ml-6">
+            <div class="ml-4 flex items-center md:ml-6 space-x-2">
             @guest
             <x-front-page.nav-link href="/login" :active="request()->is('login')">Sign In</x-front-page.nav-link>
             <x-front-page.nav-link href="/register" :active="request()->is('register')">Sign Up</x-front-page.nav-link>

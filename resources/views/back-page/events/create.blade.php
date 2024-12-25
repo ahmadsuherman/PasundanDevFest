@@ -89,14 +89,14 @@
 
         <div class="mb-4">
             <label for="speakers" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Speakers</label>
-            <select required data-parsley-errors-container="#selec2-error" id="speakers" name="speakers[]" multiple="multiple" class="block w-full mt-1 rounded-md shadow-sm border-gray-300">
+            <select required data-parsley-errors-container="#select2-error" id="speakers" name="speakers[]" multiple="multiple" class="block w-full mt-1 rounded-md shadow-sm border-gray-300">
                 <option value="">Choose your event speakers</option>
                 @foreach($speakers as $id => $speaker)
                 <option value="{{ $id }}">{{ $speaker }}</option>
                 @endforeach
             </select>
             
-        <div id="selec2-error"></div>
+        <div id="select2-error"></div>
         </div>
         
         <div class="mb-4">

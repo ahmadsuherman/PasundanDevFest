@@ -91,7 +91,6 @@ class LoginController extends Controller
             }
         } catch (\Exception $e) {
             session()->forget('role');
-            dd($e);
             return redirect('/login')->with('error', 'Google authentication failed');
         }
     }
@@ -122,5 +121,20 @@ class LoginController extends Controller
         else {
             abort(404);
         }
+    }
+
+    public function storeLogin(Request $request)
+    {
+        $request->validate([
+            'email'         => 'required|email',
+            'password'      => 'required|min:6',
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'), $request->has('remember'))) {
+            $request->session()->regenerate();
+            return $this->redirectTo(Auth()->user());
+        }
+
+        return back()->with('error', 'Login failed. Please check your username and password and try again.')->withInput($request->except('password'));
     }
 }

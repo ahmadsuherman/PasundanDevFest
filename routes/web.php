@@ -20,23 +20,21 @@ use App\Http\Controllers\FrontPage\PaymentsController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
-
 Route::get('/events', [EventsController::class, 'index'])->name('events');
-
 Route::get('/events/{slug}', [EventsController::class, 'showDetailEvents']);
-
 Route::middleware(['auth', 'role:Members'])->group(function () {
     Route::get('/events/{slug}/register', [EventsController::class, 'showRegisterEvent']);
     Route::post('/events/{slug}/register', [PaymentsController::class, 'store'])->name('payments.store');
     Route::post('/events/{slug}/callback', [PaymentsController::class, 'receiveCallback'])->name('midtrans.callback');    
 });
-
 Route::get('/members', [MembersController::class, 'showMembers'])->name('members');
 Route::get('/speakers', [FrontSpeakerController::class, 'index'])->name('speakers');
 
 Route::middleware(['guest'])->group(function() {
     Route::get('/login', [LoginController::class, 'showLogin']);
+    Route::post('/login', [LoginController::class, 'storeLogin'])->name('login');
     Route::get('/register', [RegisterController::class, 'showRegister']);
+    Route::post('/register', [RegisterController::class, 'postRegister'])->name('register');
     
     Route::get('login/google', [LoginController::class, 'redirectToGoogle']);
     Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
@@ -47,7 +45,6 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middl
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
     
     Route::get('/dashboard', function(){
-        
         return view('back-page.dashboard', ['title' => 'Dashboard']);
     });
 
