@@ -88,7 +88,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
 
 Route::prefix('members')->middleware(['auth', 'role:Members'])->group(function () {
     Route::get('/dashboard', function(){
-        return view('back-page.dashboard', ['title' => 'Dashboard']);
+        return view('back-page.dashboard-members', ['title' => 'Dashboard']);
     });
 });
 
