@@ -27,79 +27,38 @@
       </div>
     </section>
 
-    <section class="py-12">
-        <div class="max-w-screen-lg mx-auto">
-
-            <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold mb-2 text-center">Our Team</h2>
-                <p class="mt-4 text-lg text-gray-600">
-                    Meet the dedicated team members who bring our vision to life.
-                </p>
+    <section class="dark:bg-gray-900 py-4 px-4">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+        <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
+        <h2 class="text-3xl font-bold mb-2 text-center">Our Team or Github Repository collabolators</h2>
+            <p class="text-lg text-gray-700 sm:text-xl dark:text-gray-400">Meet the dedicated team members who bring our vision to life.</p>
+        </div> 
+        <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        @switch($collaborators['status'])
+            @case('success')
+            @foreach($collaborators['data'] as $collabolator)
+            <div class="text-center text-gray-500 dark:text-gray-400">
+                <img class="mx-auto mb-4 w-36 h-36 rounded-full" src="{{ $collabolator['avatar_url'] }}" alt="{{ $collabolator['login'] }}">
+                <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {{ $collabolator['login'] }}
+                </h3>
+                <p>{{ $collabolator['role_name'] }}</p>
+                <ul class="flex justify-center mt-4 space-x-4">
+                    <li>
+                        <a target="_blank" href="{{ $collabolator['html_url'] }}" class="text-gray-900 hover:text-gray-900 dark:hover:text-white dark:text-gray-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            @endforeach
+            @break
 
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
- 
-                <div class="p-6 border rounded-lg shadow">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('img/Ahmad.jpeg') }}" alt="Ahmad Suherman" class="w-24 h-24 rounded-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800">Ahmad Suherman</h3>
-                    <p class="text-center text-gray-600">223040066</p>
-                    <p class="mt-4 text-sm text-gray-700 text-center">
-                    Ahmad Suherman adalah seorang Web Developer berpengalaman yang sangat tertarik dalam menciptakan aplikasi web 
-                    yang efisien, fungsional, dan menarik. Ia mengutamakan pengalaman pengguna dan selalu berusaha memberikan solusi teknologi yang inovatif.
-                    </p>
-                </div>
-
-                <div class="p-6 border rounded-lg shadow">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('img/Melinda.jpeg') }}" alt="Melinda Sulaiman" class="w-24 h-24 rounded-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800">Melinda Sulaiman</h3>
-                    <p class="text-center text-gray-600">223040091</p>
-                    <p class="mt-4 text-sm text-gray-700 text-center">
-                       Melinda Sulaiman adalah seorang UI/UX Designer yang berorientasi pada proses. Mulai dari riset pengguna, pembuatan wireframe, hingga prototipe interaktif,
-                       Melinda mengikuti pendekatan yang terstruktur untuk memastikan setiap desain memenuhi kebutuhan pengguna dan tujuan bisnis.
-                    </p>
-                </div>
-
-                <div class="p-6 border rounded-lg shadow">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('img/Naufal.jpg') }}" alt="Naufal Zul Faza" class="w-24 h-24 rounded-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800">Naufal Zul Faza</h3>
-                    <p class="text-center text-gray-600">223040131</p>
-                    <p class="mt-4 text-sm text-gray-700 text-center">
-                       Naufal Zul Faza adalah seorang Data Analyst dengan minat mendalam dalam menggali data untuk menemukan insight yang berharga. Dengan keahlian dalam Python, SQL, R, Tableau dan Power BI 
-                       Naufal membantu bisnis membuat keputusan yang lebih baik berdasarkan data.
-                    </p>
-                </div>
-
-                <div class="p-6 border rounded-lg shadow">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('img/Febi.jpeg') }}" alt="Febi Alia Rahman" class="w-24 h-24 rounded-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800">Febi Alia Rahman</h3>
-                    <p class="text-center text-gray-600">223040059</p>
-                    <p class="mt-4 text-sm text-gray-700 text-center">
-                       Febi Alia Rahman adalah seorang pengembang perangkat lunak yang bersemangat dengan tantangan teknis.
-                       Febi menikmati proses membangun solusi yang inovatif dan efisien. Dengan keahlian dalam back-end development, Febi berkontribusi dalam menciptakan produk digital yang berkualitas tinggi.
-                    </p>
-                </div>
-
-                <div class="p-6 border rounded-lg shadow">
-                    <div class="flex justify-center mb-4">
-                        <img src="{{ asset('img/Kholish.jpeg') }}" alt="Muhammad Kholish Kamil" class="w-24 h-24 rounded-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold text-center text-gray-800">Muhammad Kholish Kamil</h3>
-                    <p class="text-center text-gray-600">223040141</p>
-                    <p class="mt-4 text-sm text-gray-700 text-center">
-                        Muhammad Kholish Kamil adalah seorang Front-End Developer yang berdedikasi untuk menciptakan antarmuka pengguna yang menarik dan intuitif. Dengan keahlian dalam HTML, CSS, JavaScript, 
-                        Kholish berfokus pada pengembangan front-end yang responsif dan user-friendly.
-                    </p>
-                </div>
-            </div>
-        </div>
+            @case('error')
+            <div class="col-span-3 text-center text-gray-500 dark:text-gray-400">{{ $collaborators['error'] }}</p>
+            @break
+        @endswitch
+        </div>  
+    </div>
     </section>
-    
 </x-frontPage.layout>

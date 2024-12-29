@@ -41,4 +41,8 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'github' => [
+        'token' => env('GITHUB_API_TOKEN'),
+        'owner' => env('GITHUB_OWNER'),
+    ],
 ];

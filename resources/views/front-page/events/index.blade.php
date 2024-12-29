@@ -50,7 +50,7 @@
                   <h3 class="text-3xl font-bold">
                     <a class="focus-ring transition hover:text-primary" href="{{ url('events/'. $event->slug) }}">{{ $event->title }}</a>
                   </h3>
-                  <p>{{ Str::limit(strip_tags($event->description), 200, '...') }}</p>
+                  <p>{{ Str::limit(strip_tags(html_entity_decode($event->description)), 200, '...') }}</p>
                 </div>
                 <p class="text-sm text-muted-foreground">
                   <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $event->category->name }}</span>
