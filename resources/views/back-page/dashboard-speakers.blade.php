@@ -3,8 +3,8 @@
 
     <h1>Hi, {{ Auth()->user()->fullname ?? 'User' }}</h1>
 
-    <div class="container mx-auto p-6 bg-gray-100 min-h-screen">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="container mx-auto bg-gray-100 min-h-screen mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         <div class="bg-gradient-to-r from-blue-500 to-blue-700 shadow-xl rounded-lg p-6 flex flex-col space-y-6 text-white">
         <div class="flex items-center space-x-4">
             <div class="p-4 bg-white bg-opacity-20 rounded-full">
@@ -13,16 +13,16 @@
             </svg>
             </div>
             <div>
-            <h2 class="text-xl font-semibold">Events</h2>
-            <p class="text-lg">4</p>
+            <h2 class="text-xl font-semibold">Total Events</h2>
+            <p class="text-lg">{{ $eventCount}}</p>
             </div>
         </div>
         <div>
             <a 
             class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center"
-            href="#"
+            href="{{ url('events') }}"
             >
-            View Details
+            View All Events
             </a>
         </div>
         </div>
@@ -35,16 +35,16 @@
             </svg>
             </div>
             <div>
-            <h2 class="text-xl font-semibold">Speakers</h2>
-            <p class="text-lg">4</p>
+            <h2 class="text-xl font-semibold">Total Events yang Dibawakan</h2>
+            <p class="text-lg">{{ $eventHostedCount }}</p>
             </div>
         </div>
         <div>
             <a 
             class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center"
-            href="#"
+            href="{{ url('events') }}"
             >
-            View Details
+            View All Events
             </a>
         </div>
         </div>

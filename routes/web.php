@@ -7,6 +7,7 @@ use App\http\Controllers\BackPage\CategoryController;
 use App\http\Controllers\BackPage\MemberController;
 use App\http\Controllers\BackPage\SpeakerController;
 use App\http\Controllers\BackPage\EventController;
+use App\http\Controllers\BackPage\DashbaordController;
 
 use App\Http\Controllers\FrontPage\HomeController;
 use App\Http\Controllers\FrontPage\AboutController;
@@ -44,9 +45,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middl
 
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
     
-    Route::get('/dashboard', function(){
-        return view('back-page.dashboard', ['title' => 'Dashboard']);
-    });
+    Route::get('/dashboard', [DashbaordController::class, 'dashboardAdmin']);
 
     Route::get('accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::patch('accounts', [AccountController::class, 'update'])->name('accounts.update');
@@ -87,15 +86,11 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
 });
 
 Route::prefix('members')->middleware(['auth', 'role:Members'])->group(function () {
-    Route::get('/dashboard', function(){
-        return view('back-page.dashboard-members', ['title' => 'Dashboard']);
-    });
+    Route::get('/dashboard', [DashbaordController::class, 'dashboardMember']);
 });
 
 Route::prefix('speakers')->middleware(['auth', 'role:Speakers'])->group(function () {
-    Route::get('/dashboard', function(){
-        return view('back-page.dashboard-speakers', ['title' => 'Dashboard']);
-    });
+    Route::get('/dashboard', [DashbaordController::class, 'dashboardSpeaker']);
 });
 
 Route::get('/events/{slug}/export-ticket', [EventsController::class, 'exportPdf'])->name('exports.ticket');

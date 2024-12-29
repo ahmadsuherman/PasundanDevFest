@@ -16,7 +16,7 @@ class SpeakerController extends Controller
     {
         $title = 'Speakers';
         
-        $speakerQuery = User::where('roles', 'Speakers')->filter(request(['search']))
+        $speakerQuery = User::where('roles', 'Speakers')->filter(request(['search', 'is_verified']))
         ->latest();
 
         $speakers = $speakerQuery->paginate(10);
@@ -91,7 +91,7 @@ class SpeakerController extends Controller
         User::where('roles', 'Speakers')->where('username', $username)
         ->update($validated);
 
-        return redirect('admin/speakers/'. $username)->with('success', 'Speaker has been updated succesfully');
+        return redirect('admin/speakers/'. $validated['username'])->with('success', 'Speaker has been updated succesfully');
     }
 
     public function destroy(string $username)

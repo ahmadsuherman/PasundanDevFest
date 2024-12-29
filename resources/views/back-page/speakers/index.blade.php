@@ -103,7 +103,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="p-4 text-center bg-white">There are no speakers again yet</td>
+                    <td colspan="6" class="p-4 text-center bg-white">There are no speakers again yet</td>
                 </tr>
                 @endforelse
             </tbody>

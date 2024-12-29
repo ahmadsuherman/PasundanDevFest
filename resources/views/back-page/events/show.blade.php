@@ -152,9 +152,11 @@
                         </div>
 
                         <div>
-                            <span class="bg-{{ $member->pivot->payment_status ? 'green' : 'yellow' }}-100 text-{{ $member->pivot->payment_status ? 'green' : 'yellow' }}-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-{{ $member->pivot->payment_status ? 'green' : 'yellow' }}-400 border border-{{ $member->pivot->payment_status ? 'green' : 'yellow' }}-400">
-                                {{ $member->pivot->payment_status ? 'Paid' : 'Unpaid' }}
-                            </span>                         
+                            <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-{{ $member->pivot->payment_status ? 'emerald' : 'red' }}-500 bg-{{ $member->pivot->payment_status ? 'emerald' : 'red' }}-100/60 dark:bg-gray-800">
+                                <div class="w-3 h-3 rounded-full bg-{{ $member->pivot->payment_status == 1 ? 'green' : 'yellow' }}-500 mr-2"></div>
+                                <span class="text-{{ $member->pivot->payment_status == 1 ? 'green' : 'yellow' }}-600 font-semibold">{{ $member->pivot->payment_status == 1 ? 'Success' : 'Pending' }}</span>
+
+                            </div>
                         </div>
                     </div>
                 </li>

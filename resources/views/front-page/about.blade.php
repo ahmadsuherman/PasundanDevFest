@@ -1,5 +1,5 @@
 <x-frontPage.layout>
-    <x-slot:title>About PasundanDev</x-slot:title>
+    <x-slot:title>{{ $title }}</x-slot:title>
 
     <section class="members">
       <div class="w-full-md">

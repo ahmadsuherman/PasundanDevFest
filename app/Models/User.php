@@ -50,6 +50,11 @@ class User extends Authenticatable
         fn ($query, $search) =>
             $query->where('fullname', 'like', '%' . $search . '%')
         );
+
+        $query->when(array_key_exists('is_verified', $filters),
+        fn($query) =>
+            $query->where('is_verified', $filters['is_verified'])
+        );
     }
 
     public function event_members()
@@ -58,9 +63,9 @@ class User extends Authenticatable
         ->withPivot('created_at', 'payment_status');
     }
 
-    public function event_spekaers()
+    public function event_speakers()
     {
-        return $this->belongsToMany(Event::class, 'event_speakers', 'member_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'event_speakers', 'speaker_id', 'event_id');
     }
 
     public function hasRole($role)

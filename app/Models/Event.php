@@ -42,6 +42,11 @@ class Event extends Model
         fn ($query, $search) =>
             $query->where('title', 'like', '%' . $search . '%')
         );
+
+        $query->when(array_key_exists('status', $filters),
+        fn($query) =>
+            $query->where('status', $filters['status'])
+        );
     }
 
     public function getRouteKeyName()

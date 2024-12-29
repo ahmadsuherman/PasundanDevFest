@@ -3,7 +3,7 @@
 
     <h1>Hi, {{ Auth()->user()->fullname ?? 'User' }}</h1>
 
-    <div class="container mx-auto p-6 bg-gray-100 min-h-screen">
+    <div class="container mx-auto bg-gray-100 min-h-screen mt-4">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         <div class="bg-gradient-to-r from-blue-500 to-blue-700 shadow-xl rounded-lg p-6 text-white flex flex-col space-y-4">
         <div class="flex items-center space-x-4">
@@ -14,10 +14,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Events Publish</h2>
-            <p class="text-lg">5</p>
+            <p class="text-lg">{{ $event->published }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/events?status=1') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>
@@ -31,10 +31,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Events Draf</h2>
-            <p class="text-lg">5</p>
+            <p class="text-lg">{{ $event->draf }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/events?status=0') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>
@@ -49,10 +49,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Categories</h2>
-            <p class="text-lg">7</p>
+            <p class="text-lg">{{ $categoriesCount }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/categories') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>
@@ -66,10 +66,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Speakers Verified</h2>
-            <p class="text-lg">5</p>
+            <p class="text-lg">{{ $user->verified_speakers }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/speakers?is_verified=1') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>
@@ -83,10 +83,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Speakers Unverified</h2>
-            <p class="text-lg">2</p>
+            <p class="text-lg">{{ $user->unverified_speakers }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/speakers?is_verified=0') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>
@@ -100,10 +100,10 @@
             </div>
             <div>
             <h2 class="text-xl font-semibold">Members</h2>
-            <p class="text-lg">102</p>
+            <p class="text-lg">{{ $user->members }}</p>
             </div>
         </div>
-        <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
+        <a href="{{ url('admin/members') }}" class="bg-white bg-opacity-20 hover:bg-opacity-30 transition text-white text-sm font-semibold h-10 rounded-md px-5 flex items-center justify-center">
             View Details
         </a>
         </div>

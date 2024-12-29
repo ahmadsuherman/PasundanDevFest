@@ -34,7 +34,7 @@ class EventController extends Controller
                     $query->where('is_paid', false);
                 } 
             })
-            ->filter(request(['search']))
+            ->filter(request(['search', 'status']))
             ->latest();
 
         $events = $eventsQuery->orderBy('start_date', 'desc')->paginate(8);

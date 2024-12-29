@@ -91,7 +91,7 @@ class MemberController extends Controller
         User::where('roles', 'Members')->where('username', $username)
         ->update($validated);
 
-        return redirect('admin/members/'. $username)->with('success', 'Member has been updated succesfully');
+        return redirect('admin/members/'. $validated['username'])->with('success', 'Member has been updated succesfully');
     }
 
     public function destroy(string $username)
